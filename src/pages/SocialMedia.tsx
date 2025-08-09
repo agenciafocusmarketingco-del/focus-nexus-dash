@@ -17,6 +17,7 @@ import {
 } from "lucide-react";
 import { useSocialMetrics } from "@/hooks/useSocialMetrics";
 import { useSocialPosts } from "@/hooks/useSocialPosts";
+import LoadingSpinner from "@/components/LoadingSpinner";
 
 /**
  * Returns the appropriate color classes based on post status.
@@ -86,38 +87,42 @@ const SocialMedia = () => {
       </div>
 
       {/* Social Media KPIs */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        <DashboardCard
-          title="Alcance Total"
-          value={formatThousand(totalImpressions)}
-          description="Últimos 30 dias"
-          icon={Eye}
-          trend={{ value: 18.5, isPositive: true }}
-        />
-        <DashboardCard
-          title="Engajamento"
-          value={`${(averageEngagement * 100).toFixed(1)}%`}
-          description="Taxa média"
-          icon={Heart}
-          trend={{ value: 12.3, isPositive: true }}
-        />
-        <DashboardCard
-          title="Seguidores"
-          value={formatThousand(totalFollowers)}
-          description="Total"
-          icon={Users}
-          trend={{ value: 8.7, isPositive: true }}
-        />
-        <DashboardCard
-          title="Posts Publicados"
-          value={totalPosts.toString()}
-          description="Total"
-          icon={Calendar}
-          trend={{ value: 5.2, isPositive: true }}
-        />
-      </div>
+      {metricsLoading ? (
+        <LoadingSpinner className="h-24" />
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          <DashboardCard
+            title="Alcance Total"
+            value={formatThousand(totalImpressions)}
+            description="Últimos 30 dias"
+            icon={Eye}
+            trend={{ value: 18.5, isPositive: true }}
+          />
+          <DashboardCard
+            title="Engajamento"
+            value={`${(averageEngagement * 100).toFixed(1)}%`}
+            description="Taxa média"
+            icon={Heart}
+            trend={{ value: 12.3, isPositive: true }}
+          />
+          <DashboardCard
+            title="Seguidores"
+            value={formatThousand(totalFollowers)}
+            description="Total"
+            icon={Users}
+            trend={{ value: 8.7, isPositive: true }}
+          />
+          <DashboardCard
+            title="Posts Publicados"
+            value={totalPosts.toString()}
+            description="Total"
+            icon={Calendar}
+            trend={{ value: 5.2, isPositive: true }}
+          />
+        </div>
+      )}
 
-      {/* Platform Performance */}
+      {/* Platform Performance & Analytics */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <Card className="bg-gradient-card border-border shadow-card">
           <CardHeader>
@@ -127,7 +132,6 @@ const SocialMedia = () => {
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
-              {/* Example: You can derive these values based on metrics per platform if available */}
               <div className="flex items-center justify-between p-3 bg-secondary/20 rounded-lg">
                 <div className="flex items-center gap-3">
                   <div className="w-3 h-3 bg-pink-400 rounded-full"></div>
@@ -197,7 +201,7 @@ const SocialMedia = () => {
                 <span className="text-white font-medium">25%</span>
               </div>
               <div className="flex items-center justify-between">
-                <div className="flex items.center gap-3">
+                <div className="flex items-center gap-3">
                   <MessageCircle className="h-4 w-4 text-info" />
                   <span className="text-white">Stories</span>
                 </div>
@@ -214,79 +218,87 @@ const SocialMedia = () => {
           Calendário Editorial
         </h2>
         <div className="space-y-4">
-          {posts.map((post) => (
-            <Card
-              key={post.id}
-              className="bg-gradient-card border-border shadow-card hover:shadow-glow transition-all duration-300"
-            >
-              <CardContent className="p-6">
-                <div className="flex items-start justify-between">
-                  <div className="flex-1">
-                    <div className="flex items-center gap-3 mb-3">
-                      <Badge
-                        variant="outline"
-                        className={getPlatformColor(post.platform)}
-                      >
-                        {post.platform}
-                      </Badge>
-                      <Badge
-                        variant="outline"
-                        className={getStatusColor(post.status)}
-                      >
-                        {post.status}
-                      </Badge>
-                      <Badge variant="secondary" className="text-xs">
-                        {post.type}
-                      </Badge>
-                    </div>
-                    <p className="text-white mb-3">{post.content}</p>
-                    <p className="text-sm text-muted-foreground mb-4">
-                      Agendado para: {post.scheduledFor}
-                    </p>
-
-                    {post.status === "Publicado" && (
-                      <div className="flex gap-6">
-                        <div className="flex items-center gap-2">
-                          <Heart className="h-4 w-4 text-pink-400" />
-                          <span className="text-sm text-white">
-                            {post.engagement.likes}
-                          </span>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <MessageCircle className="h-4 w-4 text-blue-400" />
-                          <span className="text-sm text-white">
-                            {post.engagement.comments}
-                          </span>
-                        </div>
-                        <div className="flex items.center gap-2">
-                          <Share className="h-4 w-4 text-green-400" />
-                          <span className="text-sm text-white">
-                            {post.engagement.shares}
-                          </span>
-                        </div>
+          {postsLoading ? (
+            <LoadingSpinner className="h-20" />
+          ) : posts.length === 0 ? (
+            <div className="p-4 bg-secondary/20 rounded-lg text-muted-foreground">
+              Nenhum post encontrado.
+            </div>
+          ) : (
+            posts.map((post) => (
+              <Card
+                key={post.id}
+                className="bg-gradient-card border-border shadow-card hover:shadow-glow transition-all duration-300"
+              >
+                <CardContent className="p-6">
+                  <div className="flex items-start justify-between">
+                    <div className="flex-1">
+                      <div className="flex items-center gap-3 mb-3">
+                        <Badge
+                          variant="outline"
+                          className={getPlatformColor(post.platform)}
+                        >
+                          {post.platform}
+                        </Badge>
+                        <Badge
+                          variant="outline"
+                          className={getStatusColor(post.status)}
+                        >
+                          {post.status}
+                        </Badge>
+                        <Badge variant="secondary" className="text-xs">
+                          {post.type}
+                        </Badge>
                       </div>
-                    )}
+                      <p className="text-white mb-3">{post.content}</p>
+                      <p className="text-sm text-muted-foreground mb-4">
+                        Agendado para: {post.scheduledFor}
+                      </p>
+
+                      {post.status === "Publicado" && (
+                        <div className="flex gap-6">
+                          <div className="flex items-center gap-2">
+                            <Heart className="h-4 w-4 text-pink-400" />
+                            <span className="text-sm text-white">
+                              {post.engagement.likes}
+                            </span>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <MessageCircle className="h-4 w-4 text-blue-400" />
+                            <span className="text-sm text-white">
+                              {post.engagement.comments}
+                            </span>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <Share className="h-4 w-4 text-green-400" />
+                            <span className="text-sm text-white">
+                              {post.engagement.shares}
+                            </span>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                    <div className="flex gap-2">
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        className="text-white border-border hover:bg-secondary/20"
+                      >
+                        <Eye className="h-3 w-3" />
+                      </Button>
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        className="text-white border-border hover:bg-secondary/20"
+                      >
+                        Editar
+                      </Button>
+                    </div>
                   </div>
-                  <div className="flex gap-2">
-                    <Button
-                      size="sm"
-                      variant="outline"
-                      className="text-white border-border hover:bg-secondary/20"
-                    >
-                      <Eye className="h-3 w-3" />
-                    </Button>
-                    <Button
-                      size="sm"
-                      variant="outline"
-                      className="text-white border-border hover:bg-secondary/20"
-                    >
-                      Editar
-                    </Button>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
+                </CardContent>
+              </Card>
+            ))
+          )}
         </div>
       </div>
     </div>

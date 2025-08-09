@@ -5,7 +5,7 @@ import { ActivityTimeline } from "@/components/ActivityTimeline";
 import { ProjectStatusList } from "@/components/ProjectStatusList";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import focusLogo from "@/assets/focus-logo-orange.png";
+import focusLogo from "@/assets/focus-logo.png";
 import { 
   Target, 
   TrendingUp, 

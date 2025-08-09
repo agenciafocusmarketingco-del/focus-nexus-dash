@@ -6,6 +6,14 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AppSidebar } from "@/components/AppSidebar";
 import Dashboard from "./pages/Dashboard";
+import Projects from "./pages/Projects"; 
+import Branding from "./pages/Branding";
+import TrafficAds from "./pages/TrafficAds";
+import SocialMedia from "./pages/SocialMedia";
+import Development from "./pages/Development";
+import CRM from "./pages/CRM";
+import Reports from "./pages/Reports";
+import Chat from "./pages/Chat";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -32,6 +40,14 @@ const App = () => (
               <main className="flex-1 p-6">
                 <Routes>
                   <Route path="/" element={<Dashboard />} />
+                  <Route path="/projects" element={<Projects />} />
+                  <Route path="/branding" element={<Branding />} />
+                  <Route path="/ads" element={<TrafficAds />} />
+                  <Route path="/social" element={<SocialMedia />} />
+                  <Route path="/development" element={<Development />} />
+                  <Route path="/crm" element={<CRM />} />
+                  <Route path="/reports" element={<Reports />} />
+                  <Route path="/chat" element={<Chat />} />
                   {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                   <Route path="*" element={<NotFound />} />
                 </Routes>

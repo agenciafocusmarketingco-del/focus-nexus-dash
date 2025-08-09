@@ -31,7 +31,8 @@ import focusLogo from "@/assets/focus-logo.png";
 
 const principalItems = [
   { title: "Dashboard", url: "/", icon: BarChart3 },
-  { title: "Branding", url: "/branding", icon: Palette },
+  { title: "Identidade Visual", url: "/identidade-visual", icon: Palette },
+  { title: "Branding", url: "/branding", icon: Briefcase },
   { title: "Tráfego Pago", url: "/traffic", icon: Target },
   { title: "Social Media", url: "/social", icon: Calendar },
   { title: "Sites & Sistemas", url: "/development", icon: Globe },
@@ -45,6 +46,7 @@ const analyticsItems = [
 
 const supportItems = [
   { title: "Comunicação", url: "/chat", icon: MessageCircle },
+  { title: "Focus Experience", url: "/focus-experience", icon: Users },
   { title: "Configurações", url: "/settings", icon: Settings },
   { title: "Ajuda", url: "/help", icon: Users },
 ];

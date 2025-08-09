@@ -8,12 +8,15 @@ import { AppSidebar } from "@/components/AppSidebar";
 import Dashboard from "./pages/Dashboard";
 import Projects from "./pages/Projects"; 
 import Branding from "./pages/Branding";
+import IdentidadeVisual from "./pages/IdentidadeVisual";
 import TrafficAds from "./pages/TrafficAds";
 import SocialMedia from "./pages/SocialMedia";
 import Development from "./pages/Development";
 import CRM from "./pages/CRM";
 import Reports from "./pages/Reports";
+import Performance from "./pages/Performance";
 import Chat from "./pages/Chat";
+import FocusExperience from "./pages/FocusExperience";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -43,7 +46,9 @@ const App = () => (
                   <Route path="/projects" element={<Projects />} />
                   <Route path="/branding" element={<Branding />} />
                   <Route path="/traffic" element={<TrafficAds />} />
-                  <Route path="/performance" element={<Reports />} />
+                  <Route path="/identidade-visual" element={<IdentidadeVisual />} />
+                  <Route path="/performance" element={<Performance />} />
+                  <Route path="/focus-experience" element={<FocusExperience />} />
                   <Route path="/settings" element={<NotFound />} />
                   <Route path="/help" element={<NotFound />} />
                   <Route path="/social" element={<SocialMedia />} />

@@ -1,231 +1,137 @@
-import { DashboardCard } from "@/components/DashboardCard";
-import { MetricsChart } from "@/components/MetricsChart";
-import { TrafficChart } from "@/components/TrafficChart";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { 
-  Target, 
-  DollarSign, 
-  TrendingUp, 
-  Users, 
-  MousePointer,
+import { useMemo } from 'react';
+import { DashboardCard } from '@/components/DashboardCard';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import {
   Eye,
-  Play,
-  Pause,
-  BarChart3
-} from "lucide-react";
+  MousePointerClick,
+  TrendingUp,
+  DollarSign,
+  CheckCircle,
+  XCircle
+} from 'lucide-react';
+import { useGoogleCampaignStats } from '@/hooks/useGoogleCampaignStats';
 
-const campaigns = [
-  {
-    id: 1,
-    name: "Black Friday 2024",
-    platform: "Meta Ads",
-    status: "Ativa",
-    budget: "R$ 5.000",
-    spent: "R$ 3.245",
-    roas: "4.2x",
-    conversions: 89
-  },
-  {
-    id: 2,
-    name: "Lançamento Produto",
-    platform: "Google Ads",
-    status: "Pausada",
-    budget: "R$ 2.500",
-    spent: "R$ 1.890",
-    roas: "3.8x",
-    conversions: 45
-  },
-  {
-    id: 3,
-    name: "Remarketing",
-    platform: "Meta Ads",
-    status: "Ativa",
-    budget: "R$ 1.200",
-    spent: "R$ 980",
-    roas: "5.1x",
-    conversions: 67
-  }
-];
-
-const getStatusColor = (status: string) => {
-  switch (status) {
-    case "Ativa": return "bg-success/20 text-success border-success/30";
-    case "Pausada": return "bg-warning/20 text-warning border-warning/30";
-    case "Finalizada": return "bg-muted/20 text-muted-foreground border-muted/30";
-    default: return "bg-secondary/20 text-white border-secondary/30";
-  }
-};
-
+/**
+ * Página de Tráfego Pago que consulta dados reais via Google Ads API (v21)
+ * utilizando o hook useGoogleCampaignStats. Substitui a versão estática
+ * baseada em arrays mockados.
+ */
 const TrafficAds = () => {
+  // TODO: substitua pelo ID do cliente Google Ads (ex.: '123-456-7890')
+  const customerId = 'YOUR_CUSTOMER_ID';
+  const { stats, loading } = useGoogleCampaignStats(customerId);
+
+  // Aggregated metrics
+  const {
+    impressions,
+    clicks,
+    conversions,
+    costMicros
+  } = useMemo(() => {
+    return stats.reduce(
+      (acc, s) => {
+        acc.impressions += s.impressions;
+        acc.clicks += s.clicks;
+        acc.conversions += s.conversions;
+        acc.costMicros += s.costMicros;
+        return acc;
+      },
+      { impressions: 0, clicks: 0, conversions: 0, costMicros: 0 }
+    );
+  }, [stats]);
+
+  // Format cost from micros to currency (assuming BRL)
+  const cost = costMicros / 1_000_000; // convert micros to base unit
+
+  const formatNumber = (val: number) =>
+    val >= 1000 ? (val / 1000).toFixed(1) + 'K' : val.toString();
+
   return (
     <div className="space-y-6 animate-fade-in">
-      {/* Header */}
       <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-bold text-white mb-2">Tráfego Pago</h1>
-          <p className="text-muted-foreground">Monitore o desempenho das suas campanhas</p>
-        </div>
+        <h1 className="text-3xl font-bold text-white">Tráfego Pago</h1>
+        {/* Botão para criar campanha - funcionalidade futura */}
         <Button className="bg-gradient-primary text-white hover:shadow-glow">
-          <Target className="h-4 w-4 mr-2" />
-          Nova Campanha
+          Criar Campanha
         </Button>
       </div>
 
-      {/* KPI Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
+      {/* KPIs Resumidos */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         <DashboardCard
-          title="ROAS Médio"
-          value="4.4x"
-          icon={DollarSign}
-          trend={{ value: 8.5, isPositive: true }}
+          title="Impressões"
+          value={formatNumber(impressions)}
+          description="Últimos 30 dias"
+          icon={Eye}
+          trend={{ value: 5.3, isPositive: true }}
+        />
+        <DashboardCard
+          title="Cliques"
+          value={formatNumber(clicks)}
+          description="Últimos 30 dias"
+          icon={MousePointerClick}
+          trend={{ value: 4.1, isPositive: true }}
         />
         <DashboardCard
           title="Conversões"
-          value="201"
-          description="Este mês"
-          icon={Target}
-          trend={{ value: 15.2, isPositive: true }}
+          value={formatNumber(conversions)}
+          description="Últimos 30 dias"
+          icon={CheckCircle}
+          trend={{ value: 2.7, isPositive: true }}
         />
         <DashboardCard
-          title="CTR"
-          value="2.8%"
-          description="Taxa de cliques"
-          icon={MousePointer}
-          trend={{ value: 5.1, isPositive: true }}
-        />
-        <DashboardCard
-          title="Impressões"
-          value="125.4K"
-          description="Total"
-          icon={Eye}
-          trend={{ value: 22.3, isPositive: true }}
-        />
-        <DashboardCard
-          title="CPC Médio"
-          value="R$ 1.85"
-          description="Custo por clique"
-          icon={TrendingUp}
-          trend={{ value: -3.2, isPositive: false }}
+          title="Custo (R$)"
+          value={cost.toFixed(2)}
+          description="Total investido"
+          icon={DollarSign}
+          trend={{ value: -1.3, isPositive: false }}
         />
       </div>
 
-      {/* Charts */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <Card className="bg-gradient-card border-border shadow-card">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2 text-white">
-              <BarChart3 className="h-5 w-5 text-primary" />
-              Performance Mensal
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <MetricsChart />
-          </CardContent>
-        </Card>
-
-        <Card className="bg-gradient-card border-border shadow-card">
-          <CardHeader>
-            <CardTitle className="text-white">Distribuição por Plataforma</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <div className="w-3 h-3 bg-primary rounded-full"></div>
-                  <span className="text-white">Meta Ads</span>
-                </div>
-                <span className="text-white font-medium">65%</span>
-              </div>
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <div className="w-3 h-3 bg-success rounded-full"></div>
-                  <span className="text-white">Google Ads</span>
-                </div>
-                <span className="text-white font-medium">30%</span>
-              </div>
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <div className="w-3 h-3 bg-warning rounded-full"></div>
-                  <span className="text-white">TikTok Ads</span>
-                </div>
-                <span className="text-white font-medium">5%</span>
-      </div>
-
-      {/* Performance Chart */}
-      <Card className="bg-gradient-card border-border shadow-card">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <TrendingUp className="h-5 w-5 text-primary" />
-            Performance das Campanhas
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <TrafficChart />
-        </CardContent>
-      </Card>
-    </div>
-          </CardContent>
-        </Card>
-      </div>
-
-      {/* Campaigns List */}
-      <div>
-        <h2 className="text-xl font-semibold text-white mb-4">Campanhas Ativas</h2>
-        <div className="space-y-4">
-          {campaigns.map((campaign) => (
-            <Card key={campaign.id} className="bg-gradient-card border-border shadow-card hover:shadow-glow transition-all duration-300">
-              <CardContent className="p-6">
-                <div className="flex items-center justify-between">
-                  <div className="flex-1">
-                    <div className="flex items-center gap-3 mb-2">
-                      <h3 className="text-lg font-semibold text-white">{campaign.name}</h3>
-                      <Badge variant="outline" className={getStatusColor(campaign.status)}>
-                        {campaign.status}
-                      </Badge>
-                      <Badge variant="secondary" className="text-xs">
-                        {campaign.platform}
-                      </Badge>
-                    </div>
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4">
-                      <div>
-                        <p className="text-xs text-muted-foreground">Orçamento</p>
-                        <p className="text-sm font-medium text-white">{campaign.budget}</p>
-                      </div>
-                      <div>
-                        <p className="text-xs text-muted-foreground">Gasto</p>
-                        <p className="text-sm font-medium text-white">{campaign.spent}</p>
-                      </div>
-                      <div>
-                        <p className="text-xs text-muted-foreground">ROAS</p>
-                        <p className="text-sm font-medium text-primary">{campaign.roas}</p>
-                      </div>
-                      <div>
-                        <p className="text-xs text-muted-foreground">Conversões</p>
-                        <p className="text-sm font-medium text-white">{campaign.conversions}</p>
-                      </div>
-                    </div>
+      {/* Listagem de Campanhas */}
+      <div className="grid grid-cols-1 gap-4">
+        {loading ? (
+          <p className="text-muted-foreground">Carregando campanhas...</p>
+        ) : stats.length === 0 ? (
+          <p className="text-muted-foreground">Nenhuma campanha encontrada.</p>
+        ) : (
+          stats.map((c) => (
+            <Card key={c.id} className="bg-gradient-card border-border shadow-card">
+              <CardHeader>
+                <CardTitle className="text-white flex justify-between items-center">
+                  <span>{c.name}</span>
+                  {/* Exemplo de status simples: conversões positivas ou não */}
+                  {c.conversions > 0 ? (
+                    <CheckCircle className="h-5 w-5 text-success" />
+                  ) : (
+                    <XCircle className="h-5 w-5 text-warning" />
+                  )}
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm text-white">
+                  <div>
+                    <p className="text-muted-foreground">Impressões</p>
+                    <p className="font-medium">{formatNumber(c.impressions)}</p>
                   </div>
-                  <div className="flex gap-2">
-                    {campaign.status === "Ativa" ? (
-                      <Button size="sm" variant="outline" className="text-white border-border hover:bg-secondary/20">
-                        <Pause className="h-3 w-3" />
-                      </Button>
-                    ) : (
-                      <Button size="sm" variant="outline" className="text-white border-border hover:bg-secondary/20">
-                        <Play className="h-3 w-3" />
-                      </Button>
-                    )}
-                    <Button size="sm" variant="outline" className="text-white border-border hover:bg-secondary/20">
-                      <Eye className="h-3 w-3" />
-                    </Button>
+                  <div>
+                    <p className="text-muted-foreground">Cliques</p>
+                    <p className="font-medium">{formatNumber(c.clicks)}</p>
+                  </div>
+                  <div>
+                    <p className="text-muted-foreground">Conversões</p>
+                    <p className="font-medium">{formatNumber(c.conversions)}</p>
+                  </div>
+                  <div>
+                    <p className="text-muted-foreground">Custo (R$)</p>
+                    <p className="font-medium">{(c.costMicros / 1_000_000).toFixed(2)}</p>
                   </div>
                 </div>
               </CardContent>
             </Card>
-          ))}
-        </div>
+          ))
+        )}
       </div>
     </div>
   );

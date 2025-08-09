@@ -11,6 +11,7 @@ import {
   Target,
   TrendingUp,
   Users,
+  Video,
   Zap
 } from "lucide-react";
 
@@ -32,7 +33,7 @@ import focusLogo from "@/assets/focus-logo.png";
 const principalItems = [
   { title: "Dashboard", url: "/", icon: BarChart3 },
   { title: "Identidade Visual", url: "/identidade-visual", icon: Palette },
-  { title: "Branding", url: "/branding", icon: Briefcase },
+  { title: "Focus Estudios", url: "/focus-estudios", icon: Video },
   { title: "Tráfego Pago", url: "/traffic", icon: Target },
   { title: "Social Media", url: "/social", icon: Calendar },
   { title: "Sites & Sistemas", url: "/development", icon: Globe },

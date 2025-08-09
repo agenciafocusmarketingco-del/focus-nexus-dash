@@ -7,8 +7,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AppSidebar } from "@/components/AppSidebar";
 import Dashboard from "./pages/Dashboard";
 import Projects from "./pages/Projects"; 
-import Branding from "./pages/Branding";
 import IdentidadeVisual from "./pages/IdentidadeVisual";
+import FocusEstudios from "./pages/FocusEstudios";
 import TrafficAds from "./pages/TrafficAds";
 import SocialMedia from "./pages/SocialMedia";
 import Development from "./pages/Development";
@@ -44,7 +44,7 @@ const App = () => (
                 <Routes>
                   <Route path="/" element={<Dashboard />} />
                   <Route path="/projects" element={<Projects />} />
-                  <Route path="/branding" element={<Branding />} />
+                  <Route path="/focus-estudios" element={<FocusEstudios />} />
                   <Route path="/traffic" element={<TrafficAds />} />
                   <Route path="/identidade-visual" element={<IdentidadeVisual />} />
                   <Route path="/performance" element={<Performance />} />

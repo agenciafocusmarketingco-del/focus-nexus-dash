@@ -34,15 +34,17 @@ export function TrafficChart() {
             type="monotone" 
             dataKey="roas" 
             stroke="hsl(var(--primary))" 
+            strokeWidth={4}
             fill="hsl(var(--primary))"
-            fillOpacity={0.3}
+            fillOpacity={0.4}
           />
           <Area 
             type="monotone" 
             dataKey="conversoes" 
             stroke="hsl(var(--success))" 
+            strokeWidth={3}
             fill="hsl(var(--success))"
-            fillOpacity={0.2}
+            fillOpacity={0.3}
           />
         </AreaChart>
       </ResponsiveContainer>

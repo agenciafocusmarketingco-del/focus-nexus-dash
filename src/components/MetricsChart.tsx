@@ -34,8 +34,9 @@ export function MetricsChart() {
             type="monotone" 
             dataKey="leads" 
             stroke="hsl(var(--primary))" 
-            strokeWidth={3}
-            dot={{ fill: 'hsl(var(--primary))', strokeWidth: 2, r: 4 }}
+            strokeWidth={5}
+            dot={{ fill: 'hsl(var(--primary))', strokeWidth: 3, r: 6 }}
+            activeDot={{ r: 8, stroke: 'hsl(var(--primary))', strokeWidth: 3 }}
           />
         </LineChart>
       </ResponsiveContainer>

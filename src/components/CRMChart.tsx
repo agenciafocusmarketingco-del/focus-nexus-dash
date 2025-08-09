@@ -1,15 +1,15 @@
 import { ComposedChart, Bar, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
 const data = [
-  { month: 'Dez', receita: 42000, leads: 680, roas: 3.8, projetos: 8 },
-  { month: 'Jan', receita: 48700, leads: 847, roas: 4.2, projetos: 12 },
-  { month: 'Fev', receita: 52300, leads: 920, roas: 4.5, projetos: 15 },
-  { month: 'Mar', receita: 58900, leads: 1120, roas: 4.8, projetos: 18 },
-  { month: 'Abr', receita: 63400, leads: 1285, roas: 5.1, projetos: 22 },
-  { month: 'Mai', receita: 69800, leads: 1456, roas: 5.4, projetos: 25 },
+  { month: 'Jul', leads: 980, qualificados: 540, oportunidades: 210, fechados: 156, taxaConversao: 15.9 },
+  { month: 'Ago', leads: 1120, qualificados: 630, oportunidades: 245, fechados: 189, taxaConversao: 16.8 },
+  { month: 'Set', leads: 1340, qualificados: 750, oportunidades: 290, fechados: 220, taxaConversao: 16.4 },
+  { month: 'Out', leads: 1480, qualificados: 840, oportunidades: 320, fechados: 245, taxaConversao: 16.5 },
+  { month: 'Nov', leads: 1574, qualificados: 892, oportunidades: 345, fechados: 291, taxaConversao: 18.5 },
+  { month: 'Dez', leads: 1680, qualificados: 950, oportunidades: 380, fechados: 315, taxaConversao: 18.7 },
 ];
 
-export function ReportsChart() {
+export function CRMChart() {
   return (
     <div className="h-[400px] w-full">
       <ResponsiveContainer width="100%" height="100%">
@@ -41,31 +41,40 @@ export function ReportsChart() {
           <Legend />
           <Bar 
             yAxisId="left"
-            dataKey="receita" 
+            dataKey="leads" 
             fill="hsl(var(--primary))" 
-            name="Receita (R$)"
+            name="Leads"
             radius={[6, 6, 0, 0]}
             stroke="hsl(var(--primary))"
             strokeWidth={2}
           />
           <Bar 
             yAxisId="left"
-            dataKey="leads" 
+            dataKey="qualificados" 
             fill="hsl(var(--success))" 
-            name="Leads"
+            name="Qualificados"
             radius={[6, 6, 0, 0]}
             stroke="hsl(var(--success))"
+            strokeWidth={2}
+          />
+          <Bar 
+            yAxisId="left"
+            dataKey="fechados" 
+            fill="#8884d8" 
+            name="Fechados"
+            radius={[6, 6, 0, 0]}
+            stroke="#8884d8"
             strokeWidth={2}
           />
           <Line 
             yAxisId="right"
             type="monotone" 
-            dataKey="roas" 
-            stroke="#8884d8" 
+            dataKey="taxaConversao" 
+            stroke="#ff6600" 
             strokeWidth={4}
-            name="ROAS"
-            dot={{ fill: '#8884d8', strokeWidth: 3, r: 6 }}
-            activeDot={{ r: 8, stroke: '#8884d8', strokeWidth: 3 }}
+            name="Taxa Conversão (%)"
+            dot={{ fill: '#ff6600', strokeWidth: 3, r: 6 }}
+            activeDot={{ r: 8, stroke: '#ff6600', strokeWidth: 3 }}
           />
         </ComposedChart>
       </ResponsiveContainer>

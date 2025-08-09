@@ -34,22 +34,25 @@ export function SocialChart() {
             type="monotone" 
             dataKey="engajamento" 
             stroke="hsl(var(--primary))" 
-            strokeWidth={3}
-            dot={{ fill: 'hsl(var(--primary))', strokeWidth: 2, r: 4 }}
+            strokeWidth={5}
+            dot={{ fill: 'hsl(var(--primary))', strokeWidth: 3, r: 6 }}
+            activeDot={{ r: 8, stroke: 'hsl(var(--primary))', strokeWidth: 3 }}
           />
           <Line 
             type="monotone" 
             dataKey="alcance" 
             stroke="hsl(var(--success))" 
-            strokeWidth={2}
-            dot={{ fill: 'hsl(var(--success))', strokeWidth: 2, r: 3 }}
+            strokeWidth={4}
+            dot={{ fill: 'hsl(var(--success))', strokeWidth: 3, r: 5 }}
+            activeDot={{ r: 7, stroke: 'hsl(var(--success))', strokeWidth: 2 }}
           />
           <Line 
             type="monotone" 
             dataKey="seguidores" 
             stroke="#8884d8" 
-            strokeWidth={2}
-            dot={{ fill: '#8884d8', strokeWidth: 2, r: 3 }}
+            strokeWidth={4}
+            dot={{ fill: '#8884d8', strokeWidth: 3, r: 5 }}
+            activeDot={{ r: 7, stroke: '#8884d8', strokeWidth: 2 }}
           />
         </LineChart>
       </ResponsiveContainer>

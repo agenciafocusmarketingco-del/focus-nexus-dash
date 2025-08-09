@@ -4,6 +4,8 @@ import { SalesChart } from "@/components/SalesChart";
 import { ActivityTimeline } from "@/components/ActivityTimeline";
 import { ProjectStatusGrid } from "@/components/ProjectStatusGrid";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import focusLogo from "@/assets/focus-logo.png";
 import { 
   Target, 
   TrendingUp, 
@@ -11,19 +13,38 @@ import {
   DollarSign, 
   Eye,
   MousePointer,
-  Calendar
+  Calendar,
+  Building,
+  Briefcase
 } from "lucide-react";
 
 const Dashboard = () => {
   return (
     <div className="space-y-6 animate-fade-in">
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold text-foreground mb-2">
-          Bem-vindo ao seu Dashboard Focus
-        </h1>
-        <p className="text-muted-foreground">
-          Acompanhe em tempo real o progresso de todos os seus projetos e campanhas.
-        </p>
+      <div className="mb-8 flex items-center gap-6">
+        <div className="flex items-center gap-4">
+          <img src={focusLogo} alt="Focus Logo" className="w-16 h-16 rounded-xl shadow-glow" />
+          <div>
+            <h1 className="text-3xl font-bold text-foreground mb-2">
+              Bem-vindo ao seu Dashboard Focus
+            </h1>
+            <p className="text-muted-foreground">
+              Acompanhe em tempo real o progresso de todos os seus projetos e campanhas com análises detalhadas.
+            </p>
+          </div>
+        </div>
+        <div className="ml-auto">
+          <div className="grid grid-cols-2 gap-2 text-center">
+            <div className="p-3 bg-gradient-card rounded-lg border border-border">
+              <div className="text-lg font-bold text-primary">98%</div>
+              <div className="text-xs text-muted-foreground">Satisfação</div>
+            </div>
+            <div className="p-3 bg-gradient-card rounded-lg border border-border">
+              <div className="text-lg font-bold text-success">24/7</div>
+              <div className="text-xs text-muted-foreground">Suporte</div>
+            </div>
+          </div>
+        </div>
       </div>
 
       {/* KPI Cards */}

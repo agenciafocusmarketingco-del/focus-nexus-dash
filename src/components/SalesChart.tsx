@@ -33,7 +33,9 @@ export function SalesChart() {
           <Bar 
             dataKey="vendas" 
             fill="hsl(var(--primary))" 
-            radius={[4, 4, 0, 0]}
+            radius={[6, 6, 0, 0]}
+            stroke="hsl(var(--primary))"
+            strokeWidth={2}
           />
         </BarChart>
       </ResponsiveContainer>

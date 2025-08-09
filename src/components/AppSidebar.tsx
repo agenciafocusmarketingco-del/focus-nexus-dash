@@ -29,21 +29,24 @@ import {
 // Import the Focus logo
 import focusLogo from "@/assets/focus-logo.png";
 
-const mainItems = [
+const principalItems = [
   { title: "Dashboard", url: "/", icon: BarChart3 },
-  { title: "Projetos", url: "/projects", icon: Briefcase },
   { title: "Branding", url: "/branding", icon: Palette },
-  { title: "Tráfego Pago", url: "/ads", icon: Target },
+  { title: "Tráfego Pago", url: "/traffic", icon: Target },
   { title: "Social Media", url: "/social", icon: Calendar },
   { title: "Sites & Sistemas", url: "/development", icon: Globe },
   { title: "CRM & Automação", url: "/crm", icon: Zap },
 ];
 
-const secondaryItems = [
+const analyticsItems = [
   { title: "Relatórios", url: "/reports", icon: TrendingUp },
-  { title: "Equipe", url: "/team", icon: Users },
+  { title: "Performance", url: "/performance", icon: BarChart3 },
+];
+
+const supportItems = [
   { title: "Comunicação", url: "/chat", icon: MessageCircle },
   { title: "Configurações", url: "/settings", icon: Settings },
+  { title: "Ajuda", url: "/help", icon: Users },
 ];
 
 export function AppSidebar() {
@@ -77,14 +80,14 @@ export function AppSidebar() {
           )}
         </div>
 
-        {/* Main Navigation */}
+        {/* Principal Navigation */}
         <SidebarGroup>
           <SidebarGroupLabel className={`${collapsed ? "hidden" : "block"} text-white text-xs uppercase tracking-wider mb-2`}>
             Principal
           </SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu className="space-y-1">
-              {mainItems.map((item) => (
+              {principalItems.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild className="h-10">
                     <NavLink to={item.url} end className={getNavCls}>
@@ -98,14 +101,14 @@ export function AppSidebar() {
           </SidebarGroupContent>
         </SidebarGroup>
 
-        {/* Secondary Navigation */}
-        <SidebarGroup className="mt-8">
+        {/* Analytics Navigation */}
+        <SidebarGroup className="mt-6">
           <SidebarGroupLabel className={`${collapsed ? "hidden" : "block"} text-white text-xs uppercase tracking-wider mb-2`}>
-            Outros
+            Analytics
           </SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu className="space-y-1">
-              {secondaryItems.map((item) => (
+              {analyticsItems.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild className="h-10">
                     <NavLink to={item.url} end className={getNavCls}>
@@ -118,6 +121,38 @@ export function AppSidebar() {
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
+
+        {/* Support Navigation */}
+        <SidebarGroup className="mt-6">
+          <SidebarGroupLabel className={`${collapsed ? "hidden" : "block"} text-white text-xs uppercase tracking-wider mb-2`}>
+            Suporte
+          </SidebarGroupLabel>
+          <SidebarGroupContent>
+            <SidebarMenu className="space-y-1">
+              {supportItems.map((item) => (
+                <SidebarMenuItem key={item.title}>
+                  <SidebarMenuButton asChild className="h-10">
+                    <NavLink to={item.url} end className={getNavCls}>
+                      <item.icon className={`h-5 w-5 ${collapsed ? "mx-auto" : "mr-3"} text-white`} />
+                      {!collapsed && <span className="font-medium text-white">{item.title}</span>}
+                    </NavLink>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              ))}
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
+
+        {/* Rating Button */}
+        <div className="mt-8 px-2">
+          <button className="w-full text-left text-white hover:bg-white/10 p-2 rounded-lg transition-colors">
+            {!collapsed ? (
+              <span className="text-sm">⭐ Avaliar Atendimento</span>
+            ) : (
+              <span className="flex justify-center">⭐</span>
+            )}
+          </button>
+        </div>
       </SidebarContent>
     </Sidebar>
   );

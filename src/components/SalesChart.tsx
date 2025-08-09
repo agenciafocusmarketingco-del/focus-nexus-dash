@@ -1,18 +1,18 @@
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 
 const data = [
-  { name: 'Jan', leads: 250, vendas: 180 },
-  { name: 'Fev', leads: 350, vendas: 280 },
-  { name: 'Mar', leads: 500, vendas: 400 },
-  { name: 'Abr', leads: 680, vendas: 520 },
-  { name: 'Mai', leads: 800, vendas: 680 },
+  { name: 'Jan', vendas: 180 },
+  { name: 'Fev', vendas: 280 },
+  { name: 'Mar', vendas: 400 },
+  { name: 'Abr', vendas: 520 },
+  { name: 'Mai', vendas: 680 },
 ];
 
-export function MetricsChart() {
+export function SalesChart() {
   return (
     <div className="h-[300px] w-full">
       <ResponsiveContainer width="100%" height="100%">
-        <LineChart data={data}>
+        <BarChart data={data}>
           <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
           <XAxis 
             dataKey="name" 
@@ -30,14 +30,12 @@ export function MetricsChart() {
               borderRadius: '8px'
             }}
           />
-          <Line 
-            type="monotone" 
-            dataKey="leads" 
-            stroke="hsl(var(--primary))" 
-            strokeWidth={3}
-            dot={{ fill: 'hsl(var(--primary))', strokeWidth: 2, r: 4 }}
+          <Bar 
+            dataKey="vendas" 
+            fill="hsl(var(--primary))" 
+            radius={[4, 4, 0, 0]}
           />
-        </LineChart>
+        </BarChart>
       </ResponsiveContainer>
     </div>
   );

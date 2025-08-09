@@ -2,10 +2,10 @@ import { DashboardCard } from "@/components/DashboardCard";
 import { MetricsChart } from "@/components/MetricsChart";
 import { SalesChart } from "@/components/SalesChart";
 import { ActivityTimeline } from "@/components/ActivityTimeline";
-import { ProjectStatusGrid } from "@/components/ProjectStatusGrid";
+import { ProjectStatusList } from "@/components/ProjectStatusList";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import focusLogo from "@/assets/focus-logo.png";
+import focusLogo from "@/assets/focus-logo-orange.png";
 import { 
   Target, 
   TrendingUp, 
@@ -15,7 +15,11 @@ import {
   MousePointer,
   Calendar,
   Building,
-  Briefcase
+  Briefcase,
+  MessageCircle,
+  CalendarDays,
+  Mail,
+  FileText
 } from "lucide-react";
 
 const Dashboard = () => {
@@ -133,10 +137,45 @@ const Dashboard = () => {
             <CardTitle className="text-lg font-semibold text-foreground">Projetos Ativos</CardTitle>
           </CardHeader>
           <CardContent>
-            <ProjectStatusGrid />
+            <ProjectStatusList />
           </CardContent>
         </Card>
       </div>
+
+      {/* Communication Section */}
+      <Card className="bg-gradient-card border-border shadow-card">
+        <CardHeader>
+          <CardTitle className="text-lg font-semibold text-foreground">Central de Comunicação</CardTitle>
+          <p className="text-sm text-muted-foreground">Acesso rápido aos principais canais de comunicação</p>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div className="flex flex-col items-center p-4 bg-green-500/10 rounded-lg border border-green-500/20 hover:bg-green-500/20 transition-all cursor-pointer group">
+              <MessageCircle className="h-8 w-8 text-green-500 mb-2 group-hover:scale-110 transition-transform" />
+              <h3 className="font-semibold text-foreground">WhatsApp</h3>
+              <p className="text-xs text-muted-foreground text-center">Conversar agora</p>
+            </div>
+            
+            <div className="flex flex-col items-center p-4 bg-blue-500/10 rounded-lg border border-blue-500/20 hover:bg-blue-500/20 transition-all cursor-pointer group">
+              <CalendarDays className="h-8 w-8 text-blue-500 mb-2 group-hover:scale-110 transition-transform" />
+              <h3 className="font-semibold text-foreground">Agendar Reunião</h3>
+              <p className="text-xs text-muted-foreground text-center">Marcar encontro</p>
+            </div>
+            
+            <div className="flex flex-col items-center p-4 bg-purple-500/10 rounded-lg border border-purple-500/20 hover:bg-purple-500/20 transition-all cursor-pointer group">
+              <Mail className="h-8 w-8 text-purple-500 mb-2 group-hover:scale-110 transition-transform" />
+              <h3 className="font-semibold text-foreground">Enviar Email</h3>
+              <p className="text-xs text-muted-foreground text-center">Contato direto</p>
+            </div>
+            
+            <div className="flex flex-col items-center p-4 bg-orange-500/10 rounded-lg border border-orange-500/20 hover:bg-orange-500/20 transition-all cursor-pointer group">
+              <FileText className="h-8 w-8 text-orange-500 mb-2 group-hover:scale-110 transition-transform" />
+              <h3 className="font-semibold text-foreground">Relatório Semanal</h3>
+              <p className="text-xs text-muted-foreground text-center">Baixar relatório</p>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
     </div>
   );
 };

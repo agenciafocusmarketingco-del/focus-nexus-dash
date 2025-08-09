@@ -1,4 +1,5 @@
 import { DashboardCard } from "@/components/DashboardCard";
+import { SocialChart } from "@/components/SocialChart";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -127,8 +128,21 @@ const SocialMedia = () => {
                 <div className="flex gap-4 text-sm">
                   <span className="text-muted-foreground">45.2K</span>
                   <span className="text-success">+12%</span>
-                </div>
-              </div>
+      </div>
+
+      {/* Analytics Chart */}
+      <Card className="bg-gradient-card border-border shadow-card">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <TrendingUp className="h-5 w-5 text-primary" />
+            Evolução do Engajamento
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <SocialChart />
+        </CardContent>
+      </Card>
+    </div>
               <div className="flex items-center justify-between p-3 bg-secondary/20 rounded-lg">
                 <div className="flex items-center gap-3">
                   <div className="w-3 h-3 bg-blue-400 rounded-full"></div>

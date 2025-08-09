@@ -1,5 +1,6 @@
 import { DashboardCard } from "@/components/DashboardCard";
 import { MetricsChart } from "@/components/MetricsChart";
+import { TrafficChart } from "@/components/TrafficChart";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -150,8 +151,21 @@ const TrafficAds = () => {
                   <span className="text-white">TikTok Ads</span>
                 </div>
                 <span className="text-white font-medium">5%</span>
-              </div>
-            </div>
+      </div>
+
+      {/* Performance Chart */}
+      <Card className="bg-gradient-card border-border shadow-card">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <TrendingUp className="h-5 w-5 text-primary" />
+            Performance das Campanhas
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <TrafficChart />
+        </CardContent>
+      </Card>
+    </div>
           </CardContent>
         </Card>
       </div>

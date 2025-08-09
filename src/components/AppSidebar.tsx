@@ -27,7 +27,7 @@ import {
 } from "@/components/ui/sidebar";
 
 // Import the Focus logo
-import focusLogo from "@/assets/focus-logo.png";
+import focusLogo from "@/assets/focus-logo-new.png";
 
 const principalItems = [
   { title: "Dashboard", url: "/", icon: BarChart3 },

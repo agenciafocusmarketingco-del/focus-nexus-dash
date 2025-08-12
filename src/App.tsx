@@ -29,45 +29,48 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
-        <AuthGuard>
-          <SidebarProvider defaultOpen={true}>
-          <div className="min-h-screen flex w-full bg-background">
-            <AppSidebar />
-            <div className="flex-1 flex flex-col">
-              <header className="h-16 border-b border-border bg-card/50 backdrop-blur-sm sticky top-0 z-40">
-                <div className="flex items-center h-full px-6">
-                  <SidebarTrigger className="mr-4" />
-                  <div className="flex-1">
-                    <h2 className="text-lg font-semibold text-foreground">Dashboard Focus</h2>
-                    <p className="text-sm text-muted-foreground">Acompanhe seus projetos em tempo real</p>
+        <Routes>
+          <Route path="/auth" element={<Auth />} />
+          <Route path="*" element={
+            <AuthGuard>
+              <SidebarProvider defaultOpen={true}>
+                <div className="min-h-screen flex w-full bg-background">
+                  <AppSidebar />
+                  <div className="flex-1 flex flex-col">
+                    <header className="h-16 border-b border-border bg-card/50 backdrop-blur-sm sticky top-0 z-40">
+                      <div className="flex items-center h-full px-6">
+                        <SidebarTrigger className="mr-4" />
+                        <div className="flex-1">
+                          <h2 className="text-lg font-semibold text-foreground">Dashboard Focus</h2>
+                          <p className="text-sm text-muted-foreground">Acompanhe seus projetos em tempo real</p>
+                        </div>
+                      </div>
+                    </header>
+                    <main className="flex-1 p-6">
+                      <Routes>
+                        <Route path="/" element={<Dashboard />} />
+                        <Route path="/projects" element={<Projects />} />
+                        <Route path="/focus-estudios" element={<FocusEstudios />} />
+                        <Route path="/traffic" element={<TrafficAds />} />
+                        <Route path="/identidade-visual" element={<IdentidadeVisual />} />
+                        <Route path="/performance" element={<Performance />} />
+                        <Route path="/focus-experience" element={<FocusExperience />} />
+                        <Route path="/settings" element={<NotFound />} />
+                        <Route path="/help" element={<NotFound />} />
+                        <Route path="/social" element={<SocialMedia />} />
+                        <Route path="/development" element={<Development />} />
+                        <Route path="/crm" element={<CRM />} />
+                        <Route path="/reports" element={<Reports />} />
+                        <Route path="/chat" element={<Chat />} />
+                        <Route path="*" element={<NotFound />} />
+                      </Routes>
+                    </main>
                   </div>
                 </div>
-              </header>
-              <main className="flex-1 p-6">
-                <Routes>
-                  <Route path="/auth" element={<Auth />} />
-                  <Route path="/" element={<Dashboard />} />
-                  <Route path="/projects" element={<Projects />} />
-                  <Route path="/focus-estudios" element={<FocusEstudios />} />
-                  <Route path="/traffic" element={<TrafficAds />} />
-                  <Route path="/identidade-visual" element={<IdentidadeVisual />} />
-                  <Route path="/performance" element={<Performance />} />
-                  <Route path="/focus-experience" element={<FocusExperience />} />
-                  <Route path="/settings" element={<NotFound />} />
-                  <Route path="/help" element={<NotFound />} />
-                  <Route path="/social" element={<SocialMedia />} />
-                  <Route path="/development" element={<Development />} />
-                  <Route path="/crm" element={<CRM />} />
-                  <Route path="/reports" element={<Reports />} />
-                  <Route path="/chat" element={<Chat />} />
-                  {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-                  <Route path="*" element={<NotFound />} />
-                </Routes>
-              </main>
-            </div>
-          </div>
-         </SidebarProvider>
-        </AuthGuard>
+              </SidebarProvider>
+            </AuthGuard>
+          } />
+        </Routes>
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>

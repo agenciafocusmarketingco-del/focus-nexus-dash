@@ -8,6 +8,7 @@ import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { toast } from "sonner";
 import LoadingSpinner from "@/components/LoadingSpinner";
+import focusLogo from "@/assets/focus-logo.png";
 
 export default function Auth() {
   const [email, setEmail] = useState("");
@@ -73,7 +74,10 @@ export default function Auth() {
     <div className="min-h-screen flex items-center justify-center bg-gradient-background p-4">
       <Card className="w-full max-w-md bg-gradient-card border-border shadow-card">
         <CardHeader className="text-center">
-          <CardTitle className="text-2xl text-white">Focus Estúdios</CardTitle>
+          <div className="flex justify-center mb-4">
+            <img src={focusLogo} alt="Focus Marketing" className="h-12 w-12" />
+          </div>
+          <CardTitle className="text-2xl text-white">Focus Marketing</CardTitle>
           <p className="text-muted-foreground">Gerencie seus projetos e campanhas</p>
         </CardHeader>
         <CardContent>

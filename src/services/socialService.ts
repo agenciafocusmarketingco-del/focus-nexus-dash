@@ -48,6 +48,54 @@ export interface SocialPost {
   publishedAt: string;
   likes: number;
   comments: number;
+  status: string;
+  type: string;
+  content: string;
+  scheduledFor: string;
+  engagement: {
+    likes: number;
+    comments: number;
+    shares: number;
+  };
+}
+
+export async function getSocialPosts(): Promise<SocialPost[]> {
+  return [
+    {
+      id: '1',
+      platform: 'Instagram',
+      title: 'Making waves in design',
+      publishedAt: new Date().toISOString(),
+      likes: 120,
+      comments: 15,
+      status: 'Publicado',
+      type: 'Imagem',
+      content: 'Nossa mais nova criação está revolucionando o design digital!',
+      scheduledFor: '2024-01-15 14:30',
+      engagement: {
+        likes: 120,
+        comments: 15,
+        shares: 8
+      }
+    },
+    {
+      id: '2',
+      platform: 'Facebook',
+      title: 'Our latest campaign results',
+      publishedAt: new Date().toISOString(),
+      likes: 80,
+      comments: 8,
+      status: 'Agendado',
+      type: 'Vídeo',
+      content: 'Confira os resultados incríveis da nossa última campanha!',
+      scheduledFor: '2024-01-16 10:00',
+      engagement: {
+        likes: 80,
+        comments: 8,
+        shares: 12
+      }
+    }
+  ];
 }
 
 export async function getRecentPosts(): Promise<SocialPost[]> {

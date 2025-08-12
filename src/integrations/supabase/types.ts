@@ -14,13 +14,186 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      campaigns: {
+        Row: {
+          account_id: string | null
+          clicks: number | null
+          conversions: number | null
+          cost_micros: number | null
+          created_at: string
+          external_id: string | null
+          id: number
+          impressions: number | null
+          name: string
+          owner: string | null
+          platform: string
+          status: string | null
+        }
+        Insert: {
+          account_id?: string | null
+          clicks?: number | null
+          conversions?: number | null
+          cost_micros?: number | null
+          created_at?: string
+          external_id?: string | null
+          id?: number
+          impressions?: number | null
+          name: string
+          owner?: string | null
+          platform: string
+          status?: string | null
+        }
+        Update: {
+          account_id?: string | null
+          clicks?: number | null
+          conversions?: number | null
+          cost_micros?: number | null
+          created_at?: string
+          external_id?: string | null
+          id?: number
+          impressions?: number | null
+          name?: string
+          owner?: string | null
+          platform?: string
+          status?: string | null
+        }
+        Relationships: []
+      }
+      kpi_performance: {
+        Row: {
+          created_at: string
+          id: number
+          kpi: string
+          owner: string | null
+          period: string | null
+          value: number
+        }
+        Insert: {
+          created_at?: string
+          id?: number
+          kpi: string
+          owner?: string | null
+          period?: string | null
+          value: number
+        }
+        Update: {
+          created_at?: string
+          id?: number
+          kpi?: string
+          owner?: string | null
+          period?: string | null
+          value?: number
+        }
+        Relationships: []
+      }
+      projects: {
+        Row: {
+          created_at: string
+          deadline: string | null
+          id: string
+          name: string
+          owner: string | null
+          progress: number
+          service: string
+          status: string
+        }
+        Insert: {
+          created_at?: string
+          deadline?: string | null
+          id?: string
+          name: string
+          owner?: string | null
+          progress?: number
+          service: string
+          status?: string
+        }
+        Update: {
+          created_at?: string
+          deadline?: string | null
+          id?: string
+          name?: string
+          owner?: string | null
+          progress?: number
+          service?: string
+          status?: string
+        }
+        Relationships: []
+      }
+      reports: {
+        Row: {
+          author: string | null
+          created_at: string
+          date: string | null
+          description: string | null
+          id: number
+          owner: string | null
+          status: string | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          author?: string | null
+          created_at?: string
+          date?: string | null
+          description?: string | null
+          id?: number
+          owner?: string | null
+          status?: string | null
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          author?: string | null
+          created_at?: string
+          date?: string | null
+          description?: string | null
+          id?: number
+          owner?: string | null
+          status?: string | null
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      social_posts: {
+        Row: {
+          created_at: string
+          id: number
+          owner: string | null
+          platform: string
+          scheduled_at: string | null
+          status: string
+          title: string
+        }
+        Insert: {
+          created_at?: string
+          id?: number
+          owner?: string | null
+          platform: string
+          scheduled_at?: string | null
+          status?: string
+          title: string
+        }
+        Update: {
+          created_at?: string
+          id?: number
+          owner?: string | null
+          platform?: string
+          scheduled_at?: string | null
+          status?: string
+          title?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      rpc_upsert_campaigns: {
+        Args: { _account_id: string; _campaigns: Json }
+        Returns: number
+      }
     }
     Enums: {
       [_ in never]: never

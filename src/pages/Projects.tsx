@@ -2,11 +2,15 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Plus, Search as SearchIcon } from 'lucide-react';
+import { Plus, Search as SearchIcon, Filter } from 'lucide-react';
 import ProjectStatusGrid from '@/components/ProjectStatusGrid';
+import { ProjectCard } from '@/components/ProjectCard';
+import { FloatingActionButton } from '@/components/FloatingActionButton';
 import { useProjects } from '@/hooks/useProjects';
 import { useProjectsSummary } from '@/hooks/useProjectsSummary';
+import { notificationService } from '@/services/notificationService';
 import LoadingSpinner from '@/components/LoadingSpinner';
+import { useState } from 'react';
 
 /**
  * Página de listagem e resumo de projetos.
@@ -15,6 +19,21 @@ import LoadingSpinner from '@/components/LoadingSpinner';
 const Projects = () => {
   const { projects, loading: projectsLoading } = useProjects();
   const { summary, loading: summaryLoading } = useProjectsSummary();
+  const [searchTerm, setSearchTerm] = useState('');
+
+  // Filter projects based on search term
+  const filteredProjects = projects.filter(project =>
+    project.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    project.service.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  const handleNewProject = () => {
+    notificationService.info("Novo Projeto", "Funcionalidade em desenvolvimento");
+  };
+
+  const handleFilter = () => {
+    notificationService.info("Filtros", "Funcionalidade em desenvolvimento");
+  };
 
   // KPI cards com base no resumo de projetos
   const kpis = [
@@ -54,7 +73,10 @@ const Projects = () => {
             Gerencie todos os seus projetos em andamento
           </p>
         </div>
-        <Button className="bg-gradient-primary text-white hover:shadow-glow">
+        <Button 
+          onClick={handleNewProject}
+          className="bg-gradient-primary text-white hover:shadow-glow"
+        >
           <Plus className="h-4 w-4 mr-2" />
           Novo Projeto
         </Button>
@@ -69,13 +91,17 @@ const Projects = () => {
               <Input
                 type="text"
                 placeholder="Buscar projetos..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
                 className="pl-10 bg-secondary/20 border-border text-white placeholder:text-muted-foreground"
               />
             </div>
             <Button
+              onClick={handleFilter}
               variant="outline"
               className="text-white border-border hover:bg-secondary/20"
             >
+              <Filter className="h-4 w-4 mr-2" />
               Filtros
             </Button>
           </div>
@@ -106,11 +132,39 @@ const Projects = () => {
 
       {/* Grid de projetos */}
       <div>
-        <h2 className="text-xl font-semibold text-white mb-4">
-          Todos os Projetos
-        </h2>
-        <ProjectStatusGrid projects={projects} loading={projectsLoading} />
+        <div className="flex items-center justify-between mb-4">
+          <h2 className="text-xl font-semibold text-white">
+            Todos os Projetos ({filteredProjects.length})
+          </h2>
+          {searchTerm && (
+            <Badge variant="outline" className="text-white border-border">
+              Filtrado: "{searchTerm}"
+            </Badge>
+          )}
+        </div>
+        
+        {projectsLoading ? (
+          <LoadingSpinner className="h-24" />
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {filteredProjects.map((project) => (
+              <ProjectCard key={project.id} project={project} />
+            ))}
+            {filteredProjects.length === 0 && !projectsLoading && (
+              <div className="col-span-full text-center py-12">
+                <p className="text-muted-foreground">
+                  {searchTerm 
+                    ? "Nenhum projeto encontrado com os critérios de busca." 
+                    : "Nenhum projeto encontrado. Crie seu primeiro projeto!"
+                  }
+                </p>
+              </div>
+            )}
+          </div>
+        )}
       </div>
+
+      <FloatingActionButton onClick={handleNewProject} label="Novo Projeto" />
     </div>
   );
 };

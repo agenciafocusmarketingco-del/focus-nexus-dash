@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import {
   BarChart3,
   Briefcase,
@@ -12,7 +12,8 @@ import {
   TrendingUp,
   Users,
   Video,
-  Zap
+  Zap,
+  LogOut
 } from "lucide-react";
 
 import {
@@ -24,11 +25,15 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  SidebarFooter,
   useSidebar,
 } from "@/components/ui/sidebar";
 
 // Import the Focus logo
 import focusLogo from "@/assets/focus-logo.png";
+import { useAuth } from "@/hooks/useAuth";
+import { notificationService } from "@/services/notificationService";
+import { Button } from "@/components/ui/button";
 
 const principalItems = [
   { title: "Dashboard", url: "/", icon: BarChart3 },
@@ -55,6 +60,8 @@ const supportItems = [
 export function AppSidebar() {
   const { state } = useSidebar();
   const location = useLocation();
+  const navigate = useNavigate();
+  const { signOut } = useAuth();
   const currentPath = location.pathname;
   const collapsed = state === "collapsed";
 
@@ -63,6 +70,19 @@ export function AppSidebar() {
     isActive 
       ? "bg-gradient-primary text-white font-medium shadow-glow" 
       : "hover:bg-secondary/50 transition-all duration-200 text-white";
+
+  const handleLogout = async () => {
+    const loadingToast = notificationService.loading("Fazendo logout...");
+    const error = await signOut();
+    notificationService.dismiss(loadingToast);
+    
+    if (error) {
+      notificationService.error("Erro ao fazer logout", error.message);
+    } else {
+      notificationService.success("Logout realizado com sucesso!");
+      navigate("/auth");
+    }
+  };
 
   return (
     <Sidebar className={`${collapsed ? "w-16" : "w-64"} border-r border-border bg-gradient-dark`}>
@@ -157,6 +177,17 @@ export function AppSidebar() {
           </button>
         </div>
       </SidebarContent>
+
+      <SidebarFooter className="p-4">
+        <Button
+          onClick={handleLogout}
+          variant="ghost"
+          className="w-full justify-start text-white hover:bg-white/10 hover:text-white"
+        >
+          <LogOut className={`h-4 w-4 ${collapsed ? "mx-auto" : "mr-2"}`} />
+          {!collapsed && <span>Sair</span>}
+        </Button>
+      </SidebarFooter>
     </Sidebar>
   );
 }

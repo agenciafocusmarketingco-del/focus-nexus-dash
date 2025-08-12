@@ -6,6 +6,8 @@ import { ProjectStatusList } from "@/components/ProjectStatusList";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import focusLogo from "@/assets/focus-logo.png";
+import { communicationService } from "@/services/communicationService";
+import { notificationService } from "@/services/notificationService";
 import { 
   Target, 
   TrendingUp, 
@@ -23,6 +25,25 @@ import {
 } from "lucide-react";
 
 const Dashboard = () => {
+  const handleWhatsApp = () => {
+    communicationService.openWhatsApp();
+    notificationService.success("Redirecionando para WhatsApp...", "Aguarde enquanto abrimos o WhatsApp");
+  };
+
+  const handleScheduleMeeting = () => {
+    communicationService.scheduleeMeeting();
+    notificationService.info("Abrindo calendário...", "Selecione o melhor horário para nossa reunião");
+  };
+
+  const handleSendEmail = () => {
+    communicationService.sendEmail();
+    notificationService.success("Abrindo cliente de email...", "Preparamos um template para você");
+  };
+
+  const handleDownloadReport = () => {
+    communicationService.downloadWeeklyReport();
+    notificationService.success("Relatório baixado!", "O arquivo foi salvo em Downloads");
+  };
   return (
     <div className="space-y-6 animate-fade-in">
       <div className="mb-8 flex items-center gap-6">
@@ -150,25 +171,37 @@ const Dashboard = () => {
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-            <div className="flex flex-col items-center p-4 bg-green-500/10 rounded-lg border border-green-500/20 hover:bg-green-500/20 transition-all cursor-pointer group">
+            <div 
+              onClick={handleWhatsApp}
+              className="flex flex-col items-center p-4 bg-green-500/10 rounded-lg border border-green-500/20 hover:bg-green-500/20 transition-all cursor-pointer group"
+            >
               <MessageCircle className="h-8 w-8 text-green-500 mb-2 group-hover:scale-110 transition-transform" />
               <h3 className="font-semibold text-foreground">WhatsApp</h3>
               <p className="text-xs text-muted-foreground text-center">Conversar agora</p>
             </div>
             
-            <div className="flex flex-col items-center p-4 bg-blue-500/10 rounded-lg border border-blue-500/20 hover:bg-blue-500/20 transition-all cursor-pointer group">
+            <div 
+              onClick={handleScheduleMeeting}
+              className="flex flex-col items-center p-4 bg-blue-500/10 rounded-lg border border-blue-500/20 hover:bg-blue-500/20 transition-all cursor-pointer group"
+            >
               <CalendarDays className="h-8 w-8 text-blue-500 mb-2 group-hover:scale-110 transition-transform" />
               <h3 className="font-semibold text-foreground">Agendar Reunião</h3>
               <p className="text-xs text-muted-foreground text-center">Marcar encontro</p>
             </div>
             
-            <div className="flex flex-col items-center p-4 bg-purple-500/10 rounded-lg border border-purple-500/20 hover:bg-purple-500/20 transition-all cursor-pointer group">
+            <div 
+              onClick={handleSendEmail}
+              className="flex flex-col items-center p-4 bg-purple-500/10 rounded-lg border border-purple-500/20 hover:bg-purple-500/20 transition-all cursor-pointer group"
+            >
               <Mail className="h-8 w-8 text-purple-500 mb-2 group-hover:scale-110 transition-transform" />
               <h3 className="font-semibold text-foreground">Enviar Email</h3>
               <p className="text-xs text-muted-foreground text-center">Contato direto</p>
             </div>
             
-            <div className="flex flex-col items-center p-4 bg-orange-500/10 rounded-lg border border-orange-500/20 hover:bg-orange-500/20 transition-all cursor-pointer group">
+            <div 
+              onClick={handleDownloadReport}
+              className="flex flex-col items-center p-4 bg-orange-500/10 rounded-lg border border-orange-500/20 hover:bg-orange-500/20 transition-all cursor-pointer group"
+            >
               <FileText className="h-8 w-8 text-orange-500 mb-2 group-hover:scale-110 transition-transform" />
               <h3 className="font-semibold text-foreground">Relatório Semanal</h3>
               <p className="text-xs text-muted-foreground text-center">Baixar relatório</p>

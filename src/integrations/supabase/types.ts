@@ -18,6 +18,7 @@ export type Database = {
         Row: {
           account_id: string | null
           clicks: number | null
+          client_id: string | null
           conversions: number | null
           cost_micros: number | null
           created_at: string
@@ -32,6 +33,7 @@ export type Database = {
         Insert: {
           account_id?: string | null
           clicks?: number | null
+          client_id?: string | null
           conversions?: number | null
           cost_micros?: number | null
           created_at?: string
@@ -46,6 +48,7 @@ export type Database = {
         Update: {
           account_id?: string | null
           clicks?: number | null
+          client_id?: string | null
           conversions?: number | null
           cost_micros?: number | null
           created_at?: string
@@ -57,10 +60,46 @@ export type Database = {
           platform?: string
           status?: string | null
         }
+        Relationships: [
+          {
+            foreignKeyName: "campaigns_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: false
+            referencedRelation: "clients"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      clients: {
+        Row: {
+          active: boolean
+          created_at: string
+          id: string
+          name: string
+          slug: string
+          updated_at: string
+        }
+        Insert: {
+          active?: boolean
+          created_at?: string
+          id?: string
+          name: string
+          slug: string
+          updated_at?: string
+        }
+        Update: {
+          active?: boolean
+          created_at?: string
+          id?: string
+          name?: string
+          slug?: string
+          updated_at?: string
+        }
         Relationships: []
       }
       kpi_performance: {
         Row: {
+          client_id: string | null
           created_at: string
           id: number
           kpi: string
@@ -69,6 +108,7 @@ export type Database = {
           value: number
         }
         Insert: {
+          client_id?: string | null
           created_at?: string
           id?: number
           kpi: string
@@ -77,6 +117,7 @@ export type Database = {
           value: number
         }
         Update: {
+          client_id?: string | null
           created_at?: string
           id?: number
           kpi?: string
@@ -84,10 +125,57 @@ export type Database = {
           period?: string | null
           value?: number
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "kpi_performance_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: false
+            referencedRelation: "clients"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      profiles: {
+        Row: {
+          client_id: string
+          created_at: string
+          first_name: string | null
+          id: string
+          last_name: string | null
+          role: string | null
+          updated_at: string
+        }
+        Insert: {
+          client_id: string
+          created_at?: string
+          first_name?: string | null
+          id: string
+          last_name?: string | null
+          role?: string | null
+          updated_at?: string
+        }
+        Update: {
+          client_id?: string
+          created_at?: string
+          first_name?: string | null
+          id?: string
+          last_name?: string | null
+          role?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "profiles_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: false
+            referencedRelation: "clients"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       projects: {
         Row: {
+          client_id: string | null
           created_at: string
           deadline: string | null
           id: string
@@ -98,6 +186,7 @@ export type Database = {
           status: string
         }
         Insert: {
+          client_id?: string | null
           created_at?: string
           deadline?: string | null
           id?: string
@@ -108,6 +197,7 @@ export type Database = {
           status?: string
         }
         Update: {
+          client_id?: string | null
           created_at?: string
           deadline?: string | null
           id?: string
@@ -117,11 +207,20 @@ export type Database = {
           service?: string
           status?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "projects_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: false
+            referencedRelation: "clients"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       reports: {
         Row: {
           author: string | null
+          client_id: string | null
           created_at: string
           date: string | null
           description: string | null
@@ -133,6 +232,7 @@ export type Database = {
         }
         Insert: {
           author?: string | null
+          client_id?: string | null
           created_at?: string
           date?: string | null
           description?: string | null
@@ -144,6 +244,7 @@ export type Database = {
         }
         Update: {
           author?: string | null
+          client_id?: string | null
           created_at?: string
           date?: string | null
           description?: string | null
@@ -153,10 +254,19 @@ export type Database = {
           title?: string
           updated_at?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "reports_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: false
+            referencedRelation: "clients"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       social_posts: {
         Row: {
+          client_id: string | null
           created_at: string
           id: number
           owner: string | null
@@ -166,6 +276,7 @@ export type Database = {
           title: string
         }
         Insert: {
+          client_id?: string | null
           created_at?: string
           id?: number
           owner?: string | null
@@ -175,6 +286,7 @@ export type Database = {
           title: string
         }
         Update: {
+          client_id?: string | null
           created_at?: string
           id?: number
           owner?: string | null
@@ -183,13 +295,25 @@ export type Database = {
           status?: string
           title?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "social_posts_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: false
+            referencedRelation: "clients"
+            referencedColumns: ["id"]
+          },
+        ]
       }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
+      get_current_user_client_id: {
+        Args: Record<PropertyKey, never>
+        Returns: string
+      }
       rpc_upsert_campaigns: {
         Args: { _account_id: string; _campaigns: Json }
         Returns: number

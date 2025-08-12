@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
-import { supabase } from '@/lib/supabaseClient';
+import { supabase } from '@/integrations/supabase/client';
 
 export interface Project {
-  id: number;
+  id: string;
   name: string;
   service: string;
   progress: number;

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { supabase } from '@/lib/supabaseClient';
+import { supabase } from '@/integrations/supabase/client';
 
 /**
  * Representa uma métrica de performance de marketing/negócio.
@@ -7,7 +7,7 @@ import { supabase } from '@/lib/supabaseClient';
  */
 export interface PerformanceMetric {
   id: number;
-  metric_name: string;
+  kpi: string;
   value: number;
   period: string | null;
 }

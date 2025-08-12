@@ -7,7 +7,7 @@ import LoadingSpinner from '@/components/LoadingSpinner';
  * Representa um projeto com propriedades mínimas para exibição no grid.
  */
 export interface ProjectItem {
-  id: number;
+  id: string;
   name: string;
   service: string;
   progress: number;

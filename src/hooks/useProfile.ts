@@ -36,7 +36,7 @@ export function useProfile() {
             client:clients(*)
           `)
           .eq('id', user.id)
-          .single();
+          .maybeSingle();
 
         if (error) {
           console.error('Erro ao buscar perfil:', error);

@@ -1,9 +1,10 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { Building, Globe, Mail, Phone, MapPin, Users, Settings } from 'lucide-react';
 import { useProfile } from '@/hooks/useProfile';
+import { useAuth } from '@/hooks/useAuth';
 import { supabase } from '@/integrations/supabase/client';
 import { notificationService } from '@/services/notificationService';
 import { Button } from '@/components/ui/button';
@@ -22,38 +23,72 @@ const organizationSchema = z.object({
 type OrganizationFormData = z.infer<typeof organizationSchema>;
 
 export default function OrganizationSettings() {
+  const { user } = useAuth();
   const { profile, loading, refetchProfile } = useProfile();
   const [isUpdating, setIsUpdating] = useState(false);
 
   const form = useForm<OrganizationFormData>({
     resolver: zodResolver(organizationSchema),
-    values: {
-      name: profile?.client?.name || '',
-      slug: profile?.client?.slug || '',
-    },
   });
 
+  // Update form values when profile loads
+  React.useEffect(() => {
+    if (profile?.client) {
+      form.reset({
+        name: profile.client.name,
+        slug: profile.client.slug,
+      });
+    }
+  }, [profile, form]);
+
   const onSubmit = async (data: OrganizationFormData) => {
-    if (!profile?.client?.id) return;
+    if (!user) {
+      notificationService.error('Usuário não autenticado');
+      return;
+    }
+
+    if (!profile?.client?.id) {
+      notificationService.error('Informações da organização não encontradas');
+      return;
+    }
 
     setIsUpdating(true);
     
     try {
-      const { error } = await supabase
+      console.log('Usuario:', user.id);
+      console.log('Profile Client ID:', profile.client.id);
+      console.log('Tentando atualizar cliente:', profile.client.id, data);
+      
+      const { data: updateResult, error } = await supabase
         .from('clients')
         .update({
           name: data.name,
           slug: data.slug,
         })
-        .eq('id', profile.client.id);
+        .eq('id', profile.client.id)
+        .select();
 
-      if (error) throw error;
+      console.log('Resultado da atualização:', updateResult, error);
+
+      if (error) {
+        console.error('Erro na atualização:', error);
+        throw error;
+      }
+
+      if (!updateResult || updateResult.length === 0) {
+        throw new Error('Nenhum registro foi atualizado. Verifique as permissões.');
+      }
 
       notificationService.success('Configurações da organização atualizadas com sucesso!');
-      refetchProfile(); // Atualiza os dados do perfil
+      
+      // Aguarda um pouco antes de recarregar os dados
+      setTimeout(() => {
+        refetchProfile();
+      }, 1000);
+      
     } catch (error) {
       console.error('Erro ao atualizar organização:', error);
-      notificationService.error('Erro ao atualizar configurações da organização');
+      notificationService.error('Erro ao atualizar configurações da organização: ' + (error as any).message);
     } finally {
       setIsUpdating(false);
     }

@@ -12,7 +12,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
-import LoadingSpinner from '@/components/LoadingSpinner';
+
 
 const profileSchema = z.object({
   first_name: z.string().min(2, 'Nome deve ter pelo menos 2 caracteres'),
@@ -113,7 +113,7 @@ export default function Profile() {
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-[400px]">
-        <LoadingSpinner />
+        <div className="animate-spin h-8 w-8 border-2 border-primary border-t-transparent rounded-full"></div>
       </div>
     );
   }

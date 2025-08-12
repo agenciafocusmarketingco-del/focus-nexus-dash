@@ -107,6 +107,15 @@ export async function getRecentPosts(): Promise<SocialPost[]> {
       publishedAt: new Date().toISOString(),
       likes: 120,
       comments: 15,
+      status: 'Publicado',
+      type: 'Imagem',
+      content: 'Nossa mais nova criação está revolucionando o design digital!',
+      scheduledFor: '2024-01-15 14:30',
+      engagement: {
+        likes: 120,
+        comments: 15,
+        shares: 8
+      }
     },
     {
       id: '2',
@@ -115,6 +124,15 @@ export async function getRecentPosts(): Promise<SocialPost[]> {
       publishedAt: new Date().toISOString(),
       likes: 80,
       comments: 8,
+      status: 'Agendado',
+      type: 'Vídeo',
+      content: 'Confira os resultados incríveis da nossa última campanha!',
+      scheduledFor: '2024-01-16 10:00',
+      engagement: {
+        likes: 80,
+        comments: 8,
+        shares: 12
+      }
     },
   ];
 }

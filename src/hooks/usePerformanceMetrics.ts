@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
+import { useProfile } from './useProfile';
 
 /**
  * Representa uma métrica de performance de marketing/negócio.
@@ -19,9 +20,15 @@ export interface PerformanceMetric {
 export function usePerformanceMetrics() {
   const [metrics, setMetrics] = useState<PerformanceMetric[]>([]);
   const [loading, setLoading] = useState(true);
+  const { profile } = useProfile();
 
   useEffect(() => {
     async function fetchMetrics() {
+      if (!profile?.client_id) {
+        setLoading(false);
+        return;
+      }
+
       const { data, error } = await supabase
         .from('kpi_performance')
         .select('*');
@@ -33,7 +40,7 @@ export function usePerformanceMetrics() {
       setLoading(false);
     }
     fetchMetrics();
-  }, []);
+  }, [profile?.client_id]);
 
   return { metrics, loading };
 }

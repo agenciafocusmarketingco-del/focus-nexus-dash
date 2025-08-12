@@ -23,8 +23,10 @@ import {
   Mail,
   FileText
 } from "lucide-react";
+import { useProfile } from "@/hooks/useProfile";
 
 const Dashboard = () => {
+  const { profile } = useProfile();
   const handleWhatsApp = () => {
     communicationService.openWhatsApp();
     notificationService.success("Redirecionando para WhatsApp...", "Aguarde enquanto abrimos o WhatsApp");
@@ -51,10 +53,13 @@ const Dashboard = () => {
           <img src={focusLogo} alt="Focus Logo" className="w-16 h-16 rounded-xl shadow-glow" />
           <div>
             <h1 className="text-3xl font-bold text-foreground mb-2">
-              Bem-vindo ao seu Dashboard Focus
+              {profile?.client ? `Dashboard - ${profile.client.name}` : 'Bem-vindo ao seu Dashboard Focus'}
             </h1>
             <p className="text-muted-foreground">
-              Acompanhe em tempo real o progresso de todos os seus projetos e campanhas com análises detalhadas.
+              {profile?.client 
+                ? `Acompanhe métricas e projetos exclusivos de ${profile.client.name}` 
+                : 'Acompanhe em tempo real o progresso de todos os seus projetos e campanhas com análises detalhadas.'
+              }
             </p>
           </div>
         </div>

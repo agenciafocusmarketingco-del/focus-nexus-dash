@@ -34,13 +34,30 @@ export function useAuth() {
     return () => subscription.unsubscribe();
   }, []);
 
-  /**
-   * Faz login com e-mail e senha.
-   */
-  const signIn = async (email: string, password: string) => {
-    const { error } = await supabase.auth.signInWithPassword({ email, password });
-    return error;
-  };
+/**
+ * Faz cadastro com e-mail e senha.
+ */
+const signUp = async (email: string, password: string, metadata?: { first_name?: string; last_name?: string }) => {
+  const redirectUrl = `${window.location.origin}/`;
+  
+  const { error } = await supabase.auth.signUp({
+    email,
+    password,
+    options: {
+      emailRedirectTo: redirectUrl,
+      data: metadata
+    }
+  });
+  return { error };
+};
+
+/**
+ * Faz login com e-mail e senha.
+ */
+const signIn = async (email: string, password: string) => {
+  const { error } = await supabase.auth.signInWithPassword({ email, password });
+  return error;
+};
 
   /**
    * Faz logout do usuário.
@@ -50,5 +67,5 @@ export function useAuth() {
     return error;
   };
 
-  return { user, session, signIn, signOut };
+  return { user, session, signIn, signUp, signOut };
 }

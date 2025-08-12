@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
+import { useProfile } from './useProfile';
 
 /**
  * Informações agregadas sobre os projetos para estatísticas no dashboard.
@@ -25,9 +26,15 @@ export function useProjectsSummary() {
     successRate: 0,
   });
   const [loading, setLoading] = useState(true);
+  const { profile } = useProfile();
 
   useEffect(() => {
     async function fetchProjects() {
+      if (!profile?.client_id) {
+        setLoading(false);
+        return;
+      }
+
       const { data, error } = await supabase.from('projects').select('status');
       if (error) {
         console.error('Erro ao buscar projetos:', error);
@@ -42,7 +49,7 @@ export function useProjectsSummary() {
       setLoading(false);
     }
     fetchProjects();
-  }, []);
+  }, [profile?.client_id]);
 
   return { summary, loading };
 }

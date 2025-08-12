@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
+import { useProfile } from './useProfile';
 
 export interface Project {
   id: string;
@@ -13,9 +14,15 @@ export interface Project {
 export function useProjects() {
   const [projects, setProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState(true);
+  const { profile } = useProfile();
 
   useEffect(() => {
     async function fetchProjects() {
+      if (!profile?.client_id) {
+        setLoading(false);
+        return;
+      }
+
       const { data, error } = await supabase
         .from('projects')
         .select('*')
@@ -30,7 +37,7 @@ export function useProjects() {
     }
 
     fetchProjects();
-  }, []);
+  }, [profile?.client_id]);
 
   return { projects, loading };
 }

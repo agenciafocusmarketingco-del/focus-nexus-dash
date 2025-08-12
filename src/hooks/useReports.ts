@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
+import { useProfile } from './useProfile';
 
 /**
  * Representa um relatório interno armazenado no Supabase.
@@ -20,9 +21,15 @@ export interface Report {
 export function useReports() {
   const [reports, setReports] = useState<Report[]>([]);
   const [loading, setLoading] = useState(true);
+  const { profile } = useProfile();
 
   useEffect(() => {
     async function fetchReports() {
+      if (!profile?.client_id) {
+        setLoading(false);
+        return;
+      }
+
       const { data, error } = await supabase
         .from('reports')
         .select('*')
@@ -35,7 +42,7 @@ export function useReports() {
       setLoading(false);
     }
     fetchReports();
-  }, []);
+  }, [profile?.client_id]);
 
   return { reports, loading };
 }

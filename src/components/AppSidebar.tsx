@@ -32,6 +32,7 @@ import {
 // Import the Focus logo
 import focusLogo from "@/assets/focus-logo.png";
 import { useAuth } from "@/hooks/useAuth";
+import { useProfile } from "@/hooks/useProfile";
 import { notificationService } from "@/services/notificationService";
 import { Button } from "@/components/ui/button";
 
@@ -62,6 +63,7 @@ export function AppSidebar() {
   const location = useLocation();
   const navigate = useNavigate();
   const { signOut } = useAuth();
+  const { profile } = useProfile();
   const currentPath = location.pathname;
   const collapsed = state === "collapsed";
 
@@ -87,14 +89,22 @@ export function AppSidebar() {
   return (
     <Sidebar className={`${collapsed ? "w-16" : "w-64"} border-r border-border bg-gradient-dark`}>
       <SidebarContent className="p-4">
-        {/* Logo */}
+        {/* Logo and Client Info */}
         <div className="mb-8 px-2">
           {!collapsed ? (
-            <div className="flex items-center gap-3">
-              <img src={focusLogo} alt="Focus Logo" className="w-10 h-10 rounded-lg" />
-              <h1 className="text-2xl font-bold text-white">
-                Focus
-              </h1>
+            <div className="space-y-3">
+              <div className="flex items-center gap-3">
+                <img src={focusLogo} alt="Focus Logo" className="w-10 h-10 rounded-lg" />
+                <h1 className="text-2xl font-bold text-white">
+                  Focus
+                </h1>
+              </div>
+              {profile?.client && (
+                <div className="bg-white/10 p-2 rounded-lg">
+                  <p className="text-xs text-muted-foreground">Cliente</p>
+                  <p className="text-sm font-medium text-white truncate">{profile.client.name}</p>
+                </div>
+              )}
             </div>
           ) : (
             <div className="flex justify-center">

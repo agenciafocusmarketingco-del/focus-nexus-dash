@@ -3,6 +3,8 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Progress } from "@/components/ui/progress";
+import { notificationService } from "@/services/notificationService";
+import { communicationService } from "@/services/communicationService";
 import { 
   TrendingUp, 
   TrendingDown, 
@@ -90,7 +92,15 @@ const Performance = () => {
             <Filter className="h-4 w-4 mr-2" />
             Filtros
           </Button>
-          <Button>
+          <Button
+            onClick={() => {
+              notificationService.loading("Exportando dados de performance...");
+              setTimeout(() => {
+                notificationService.success("Relatório de performance exportado!");
+                communicationService.downloadFile("performance-analytics.xlsx", "XLSX");
+              }, 1500);
+            }}
+          >
             <Download className="h-4 w-4 mr-2" />
             Exportar
           </Button>

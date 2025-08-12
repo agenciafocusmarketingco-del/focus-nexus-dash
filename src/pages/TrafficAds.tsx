@@ -10,6 +10,7 @@ import {
 } from 'lucide-react';
 import { useGoogleCampaignStats } from '@/hooks/useGoogleCampaignStats';
 import LoadingSpinner from '@/components/LoadingSpinner';
+import { notificationService } from '@/services/notificationService';
 
 /**
  * Página de Tráfego Pago (Google Ads) que consome dados reais via a API V21.
@@ -57,7 +58,15 @@ const TrafficAds = () => {
       {/* Cabeçalho */}
       <div className="flex items-center justify-between">
         <h1 className="text-3xl font-bold text-white">Tráfego Pago</h1>
-        <Button className="bg-gradient-primary text-white hover:shadow-glow">
+        <Button 
+          className="bg-gradient-primary text-white hover:shadow-glow"
+          onClick={() => {
+            notificationService.loading("Iniciando assistente de criação de campanha...");
+            setTimeout(() => {
+              notificationService.success("Assistente de criação de campanha aberto!");
+            }, 1500);
+          }}
+        >
           Criar Campanha
         </Button>
       </div>

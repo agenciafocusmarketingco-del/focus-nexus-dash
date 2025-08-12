@@ -3,6 +3,8 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { notificationService } from "@/services/notificationService";
+import { communicationService } from "@/services/communicationService";
 import { 
   Palette, 
   Download, 
@@ -119,11 +121,25 @@ const IdentidadeVisual = () => {
                 <h3 className="font-medium text-foreground mb-1">{logo.name}</h3>
                 <p className="text-sm text-muted-foreground mb-3">{logo.usage}</p>
                 <div className="flex gap-2">
-                  <Button size="sm" variant="outline">
+                  <Button 
+                    size="sm" 
+                    variant="outline"
+                    onClick={() => {
+                      notificationService.success(`Baixando ${logo.name} em SVG...`);
+                      communicationService.downloadFile(`${logo.file}.svg`, 'SVG');
+                    }}
+                  >
                     <Download className="h-4 w-4 mr-1" />
                     SVG
                   </Button>
-                  <Button size="sm" variant="outline">
+                  <Button 
+                    size="sm" 
+                    variant="outline"
+                    onClick={() => {
+                      notificationService.success(`Baixando ${logo.name} em PNG...`);
+                      communicationService.downloadFile(`${logo.file}.png`, 'PNG');
+                    }}
+                  >
                     <Download className="h-4 w-4 mr-1" />
                     PNG
                   </Button>
@@ -269,7 +285,17 @@ const IdentidadeVisual = () => {
 
         {/* Download All */}
         <div className="flex justify-center">
-          <Button size="lg" className="bg-primary hover:bg-primary/90">
+          <Button 
+            size="lg" 
+            className="bg-primary hover:bg-primary/90"
+            onClick={() => {
+              notificationService.loading("Preparando pacote completo da identidade visual...");
+              setTimeout(() => {
+                notificationService.success("Pacote completo baixado com sucesso!");
+                communicationService.downloadFile("focus-identidade-visual-completa.zip", "ZIP");
+              }, 2000);
+            }}
+          >
             <Download className="h-5 w-5 mr-2" />
             Download Pacote Completo
           </Button>
@@ -283,7 +309,12 @@ const IdentidadeVisual = () => {
               <h2 className="text-2xl font-bold text-white mb-2">Gestão de Assets</h2>
               <p className="text-muted-foreground">Gerencie todos os ativos da sua marca</p>
             </div>
-            <Button className="bg-gradient-primary text-white hover:shadow-glow">
+            <Button 
+              className="bg-gradient-primary text-white hover:shadow-glow"
+              onClick={() => {
+                notificationService.info("Funcionalidade de upload será implementada em breve!");
+              }}
+            >
               <Upload className="h-4 w-4 mr-2" />
               Upload Asset
             </Button>

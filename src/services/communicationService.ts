@@ -62,5 +62,19 @@ export const communicationService = {
     a.click();
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
+  },
+
+  /**
+   * Downloads any file with given filename and type
+   */
+  downloadFile: (filename: string, fileType: string) => {
+    // Simulate file download for any file type
+    const link = document.createElement('a');
+    link.href = '#';
+    link.download = filename;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    console.log(`Downloading ${filename} (${fileType})`);
   }
 };

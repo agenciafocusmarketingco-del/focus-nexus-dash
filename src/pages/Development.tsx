@@ -2,6 +2,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
+import { notificationService } from "@/services/notificationService";
 import { 
   Globe, 
   Smartphone, 
@@ -87,7 +88,10 @@ const Development = () => {
           <h1 className="text-3xl font-bold text-white mb-2">Sites & Sistemas</h1>
           <p className="text-muted-foreground">Acompanhe o desenvolvimento dos seus projetos</p>
         </div>
-        <Button className="bg-gradient-primary text-white hover:shadow-glow">
+        <Button 
+          className="bg-gradient-primary text-white hover:shadow-glow"
+          onClick={() => notificationService.info("Formulário de novo projeto será aberto em breve!")}
+        >
           <Code className="h-4 w-4 mr-2" />
           Novo Projeto
         </Button>

@@ -4,6 +4,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
+import { notificationService } from "@/services/notificationService";
+import { communicationService } from "@/services/communicationService";
 import { 
   Zap, 
   Users, 
@@ -109,7 +111,10 @@ const CRM = () => {
           <h1 className="text-3xl font-bold text-white mb-2">CRM & Automação</h1>
           <p className="text-muted-foreground">Gerencie leads, processos e automações de vendas com ferramentas avançadas de CRM e integração completa.</p>
         </div>
-        <Button className="bg-gradient-primary text-white hover:shadow-glow">
+        <Button 
+          className="bg-gradient-primary text-white hover:shadow-glow"
+          onClick={() => notificationService.info("Assistente de automação será aberto em breve!")}
+        >
           <Zap className="h-4 w-4 mr-2" />
           Nova Automação
         </Button>
@@ -260,10 +265,20 @@ const CRM = () => {
                     <p className="text-xs text-muted-foreground mt-2">Último contato: {lead.lastContact}</p>
                   </div>
                   <div className="flex gap-2">
-                    <Button size="sm" variant="outline" className="text-white border-border hover:bg-secondary/20">
+                    <Button 
+                      size="sm" 
+                      variant="outline" 
+                      className="text-white border-border hover:bg-secondary/20"
+                      onClick={() => communicationService.openWhatsApp(lead.phone, `Olá ${lead.name}! Como posso ajudá-lo hoje?`)}
+                    >
                       <MessageCircle className="h-3 w-3" />
                     </Button>
-                    <Button size="sm" variant="outline" className="text-white border-border hover:bg-secondary/20">
+                    <Button 
+                      size="sm" 
+                      variant="outline" 
+                      className="text-white border-border hover:bg-secondary/20"
+                      onClick={() => notificationService.success(`Lead ${lead.name} movido para próxima etapa!`)}
+                    >
                       <ArrowRight className="h-3 w-3" />
                     </Button>
                   </div>

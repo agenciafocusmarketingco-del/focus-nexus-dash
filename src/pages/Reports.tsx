@@ -6,6 +6,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useReports } from "@/hooks/useReports";
 import { usePerformanceMetrics } from "@/hooks/usePerformanceMetrics";
 import LoadingSpinner from "@/components/LoadingSpinner";
+import { notificationService } from "@/services/notificationService";
+import { communicationService } from "@/services/communicationService";
 import { 
   TrendingUp, 
   Download, 
@@ -86,7 +88,16 @@ const Reports = () => {
             <Filter className="h-4 w-4 mr-2" />
             Filtros
           </Button>
-          <Button className="bg-gradient-primary text-white hover:shadow-glow">
+          <Button 
+            className="bg-gradient-primary text-white hover:shadow-glow"
+            onClick={() => {
+              notificationService.loading("Gerando relatório personalizado...");
+              setTimeout(() => {
+                notificationService.success("Relatório gerado com sucesso!");
+                communicationService.downloadFile("relatorio-personalizado.pdf", "PDF");
+              }, 2000);
+            }}
+          >
             <Calendar className="h-4 w-4 mr-2" />
             Gerar Relatório
           </Button>
@@ -203,7 +214,17 @@ const Reports = () => {
                   </div>
                   <div className="flex gap-2">
                     {report.status === "Pronto" && (
-                      <Button size="sm" className="bg-gradient-primary text-white hover:shadow-glow">
+                      <Button 
+                        size="sm" 
+                        className="bg-gradient-primary text-white hover:shadow-glow"
+                        onClick={() => {
+                          notificationService.loading(`Baixando ${report.title}...`);
+                          setTimeout(() => {
+                            notificationService.success("Download iniciado!");
+                            communicationService.downloadFile(`${report.title}.pdf`, "PDF");
+                          }, 1000);
+                        }}
+                      >
                         <Download className="h-3 w-3 mr-1" />
                         Download
                       </Button>

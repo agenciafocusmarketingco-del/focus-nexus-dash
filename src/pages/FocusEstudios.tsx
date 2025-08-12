@@ -3,6 +3,8 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { notificationService } from "@/services/notificationService";
+import { communicationService } from "@/services/communicationService";
 import { 
   Video, 
   Camera, 
@@ -177,7 +179,10 @@ const FocusEstudios = () => {
         <TabsContent value="captacoes" className="space-y-6 mt-6">
           <div className="flex items-center justify-between">
             <h2 className="text-xl font-semibold text-white">Captações em Andamento</h2>
-            <Button className="bg-gradient-primary text-white hover:shadow-glow">
+            <Button 
+              className="bg-gradient-primary text-white hover:shadow-glow"
+              onClick={() => notificationService.info("Formulário de nova captação será aberto em breve!")}
+            >
               <Plus className="h-4 w-4 mr-2" />
               Nova Captação
             </Button>

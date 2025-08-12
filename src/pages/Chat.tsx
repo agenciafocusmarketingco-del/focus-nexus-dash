@@ -2,6 +2,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
+import { notificationService } from "@/services/notificationService";
 import { 
   MessageCircle, 
   Send, 
@@ -148,10 +149,20 @@ const Chat = () => {
                 </div>
               </div>
               <div className="flex gap-2">
-                <Button size="sm" variant="outline" className="text-white border-border hover:bg-secondary/20">
+                <Button 
+                  size="sm" 
+                  variant="outline" 
+                  className="text-white border-border hover:bg-secondary/20"
+                  onClick={() => notificationService.info("Funcionalidade de chamada será implementada em breve!")}
+                >
                   <Phone className="h-4 w-4" />
                 </Button>
-                <Button size="sm" variant="outline" className="text-white border-border hover:bg-secondary/20">
+                <Button 
+                  size="sm" 
+                  variant="outline" 
+                  className="text-white border-border hover:bg-secondary/20"
+                  onClick={() => notificationService.info("Funcionalidade de videochamada será implementada em breve!")}
+                >
                   <Video className="h-4 w-4" />
                 </Button>
                 <Button size="sm" variant="outline" className="text-white border-border hover:bg-secondary/20">
@@ -200,7 +211,11 @@ const Chat = () => {
                 placeholder="Digite sua mensagem..." 
                 className="flex-1 bg-secondary/20 border-border text-white placeholder:text-muted-foreground"
               />
-              <Button size="sm" className="bg-gradient-primary text-white hover:shadow-glow">
+              <Button 
+                size="sm" 
+                className="bg-gradient-primary text-white hover:shadow-glow"
+                onClick={() => notificationService.success("Mensagem enviada!")}
+              >
                 <Send className="h-4 w-4" />
               </Button>
             </div>

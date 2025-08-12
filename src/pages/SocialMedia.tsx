@@ -18,6 +18,7 @@ import {
 import { useSocialMetrics } from "@/hooks/useSocialMetrics";
 import { useSocialPosts } from "@/hooks/useSocialPosts";
 import LoadingSpinner from "@/components/LoadingSpinner";
+import { notificationService } from "@/services/notificationService";
 
 /**
  * Returns the appropriate color classes based on post status.
@@ -80,7 +81,10 @@ const SocialMedia = () => {
             Gerencie seu calendário editorial e engajamento
           </p>
         </div>
-        <Button className="bg-gradient-primary text-white hover:shadow-glow">
+        <Button 
+          className="bg-gradient-primary text-white hover:shadow-glow"
+          onClick={() => notificationService.info("Editor de posts será aberto em breve!")}
+        >
           <Plus className="h-4 w-4 mr-2" />
           Novo Post
         </Button>

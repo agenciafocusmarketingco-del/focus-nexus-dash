@@ -3,6 +3,8 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Input } from "@/components/ui/input";
+import { notificationService } from "@/services/notificationService";
+import { communicationService } from "@/services/communicationService";
 import { 
   BookOpen, 
   Video, 
@@ -218,7 +220,16 @@ const FocusExperience = () => {
                         </div>
                         <div className="flex items-center justify-between">
                           <Badge variant="outline">{ebook.category}</Badge>
-                          <Button size="sm">
+                          <Button 
+                            size="sm"
+                            onClick={() => {
+                              notificationService.loading(`Baixando ${ebook.title}...`);
+                              setTimeout(() => {
+                                notificationService.success("eBook baixado com sucesso!");
+                                communicationService.downloadFile(`${ebook.title}.pdf`, "PDF");
+                              }, 1000);
+                            }}
+                          >
                             <Download className="h-4 w-4 mr-1" />
                             Download
                           </Button>
@@ -266,7 +277,10 @@ const FocusExperience = () => {
                               <span className="text-xs">{curso.rating}</span>
                             </div>
                           </div>
-                          <Button size="sm">
+                          <Button 
+                            size="sm"
+                            onClick={() => notificationService.info(`Abrindo curso: ${curso.title}`)}
+                          >
                             <Play className="h-4 w-4 mr-1" />
                             Assistir
                           </Button>
@@ -325,7 +339,15 @@ const FocusExperience = () => {
                     
                     <div className="flex items-center justify-between">
                       <div className="text-lg font-bold text-primary">{evento.price}</div>
-                      <Button size="sm" disabled={evento.status !== "Inscrições Abertas"}>
+                      <Button 
+                        size="sm" 
+                        disabled={evento.status !== "Inscrições Abertas"}
+                        onClick={() => {
+                          if (evento.status === "Inscrições Abertas") {
+                            notificationService.success(`Inscrição realizada para ${evento.title}!`);
+                          }
+                        }}
+                      >
                         {evento.status === "Inscrições Abertas" ? "Inscrever-se" : "Em Breve"}
                       </Button>
                     </div>

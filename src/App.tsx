@@ -28,8 +28,8 @@ const App = () => (
     <TooltipProvider>
       <Toaster />
       <Sonner />
-      <AuthGuard>
-        <BrowserRouter>
+      <BrowserRouter>
+        <AuthGuard>
           <SidebarProvider defaultOpen={true}>
           <div className="min-h-screen flex w-full bg-background">
             <AppSidebar />
@@ -66,9 +66,9 @@ const App = () => (
               </main>
             </div>
           </div>
-        </SidebarProvider>
+         </SidebarProvider>
+        </AuthGuard>
       </BrowserRouter>
-    </AuthGuard>
     </TooltipProvider>
   </QueryClientProvider>
 );

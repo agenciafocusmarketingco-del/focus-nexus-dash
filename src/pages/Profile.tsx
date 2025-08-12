@@ -23,7 +23,7 @@ const profileSchema = z.object({
 type ProfileFormData = z.infer<typeof profileSchema>;
 
 export default function Profile() {
-  const { profile, loading } = useProfile();
+  const { profile, loading, refetchProfile } = useProfile();
   const [isUpdating, setIsUpdating] = useState(false);
   const [isUploadingAvatar, setIsUploadingAvatar] = useState(false);
   const [avatarUrl, setAvatarUrl] = useState<string | null>(profile?.avatar_url || null);
@@ -71,6 +71,7 @@ export default function Profile() {
 
       setAvatarUrl(newAvatarUrl);
       notificationService.success('Avatar atualizado com sucesso!');
+      refetchProfile(); // Atualiza os dados do perfil
     } catch (error) {
       console.error('Erro ao fazer upload do avatar:', error);
       notificationService.error('Erro ao atualizar avatar');
@@ -96,6 +97,7 @@ export default function Profile() {
       if (error) throw error;
 
       notificationService.success('Perfil atualizado com sucesso!');
+      refetchProfile(); // Atualiza os dados do perfil
     } catch (error) {
       console.error('Erro ao atualizar perfil:', error);
       notificationService.error('Erro ao atualizar perfil');

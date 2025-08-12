@@ -22,12 +22,12 @@ const organizationSchema = z.object({
 type OrganizationFormData = z.infer<typeof organizationSchema>;
 
 export default function OrganizationSettings() {
-  const { profile, loading } = useProfile();
+  const { profile, loading, refetchProfile } = useProfile();
   const [isUpdating, setIsUpdating] = useState(false);
 
   const form = useForm<OrganizationFormData>({
     resolver: zodResolver(organizationSchema),
-    defaultValues: {
+    values: {
       name: profile?.client?.name || '',
       slug: profile?.client?.slug || '',
     },
@@ -50,6 +50,7 @@ export default function OrganizationSettings() {
       if (error) throw error;
 
       notificationService.success('Configurações da organização atualizadas com sucesso!');
+      refetchProfile(); // Atualiza os dados do perfil
     } catch (error) {
       console.error('Erro ao atualizar organização:', error);
       notificationService.error('Erro ao atualizar configurações da organização');

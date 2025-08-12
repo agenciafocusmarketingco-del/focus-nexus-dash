@@ -54,5 +54,31 @@ export function useProfile() {
     fetchProfile();
   }, [user]);
 
-  return { profile, loading };
+  const refetchProfile = async () => {
+    if (!user) return;
+    
+    setLoading(true);
+    try {
+      const { data, error } = await supabase
+        .from('profiles')
+        .select(`
+          *,
+          client:clients(*)
+        `)
+        .eq('id', user.id)
+        .maybeSingle();
+
+      if (error) {
+        console.error('Erro ao buscar perfil:', error);
+      } else {
+        setProfile(data as UserProfile);
+      }
+    } catch (error) {
+      console.error('Erro ao buscar perfil:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return { profile, loading, refetchProfile };
 }

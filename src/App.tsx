@@ -18,6 +18,7 @@ import Reports from "./pages/Reports";
 import Performance from "./pages/Performance";
 import Chat from "./pages/Chat";
 import FocusExperience from "./pages/FocusExperience";
+import Auth from "./pages/Auth";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -44,6 +45,7 @@ const App = () => (
               </header>
               <main className="flex-1 p-6">
                 <Routes>
+                  <Route path="/auth" element={<Auth />} />
                   <Route path="/" element={<Dashboard />} />
                   <Route path="/projects" element={<Projects />} />
                   <Route path="/focus-estudios" element={<FocusEstudios />} />

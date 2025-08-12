@@ -1,35 +1,37 @@
 import { useEffect, useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
+import { User, Session } from '@supabase/supabase-js';
 
 /**
  * Hook para lidar com autenticação usando Supabase Auth.
  * Retorna o usuário atual e funções para login e logout.
  */
 export function useAuth() {
-  const [user, setUser] = useState<any>(null);
+  const [user, setUser] = useState<User | null | undefined>(undefined);
+  const [session, setSession] = useState<Session | null>(null);
 
   useEffect(() => {
-    // Recupera a sessão atual, se existir
-    const getSession = async () => {
-      const {
-        data: { session },
-        error,
-      } = await supabase.auth.getSession();
-      if (!error) {
+    // Set up auth state listener FIRST
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(
+      (event, session) => {
+        setSession(session);
         setUser(session?.user ?? null);
+        
+        // Clear auth state on sign out
+        if (event === 'SIGNED_OUT') {
+          setUser(null);
+          setSession(null);
+        }
       }
-    };
-    getSession();
+    );
 
-    // Escuta mudanças de estado de autenticação
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange((_event, session) => {
+    // THEN check for existing session
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setSession(session);
       setUser(session?.user ?? null);
     });
-    return () => {
-      subscription.unsubscribe();
-    };
+
+    return () => subscription.unsubscribe();
   }, []);
 
   /**
@@ -48,5 +50,5 @@ export function useAuth() {
     return error;
   };
 
-  return { user, signIn, signOut };
+  return { user, session, signIn, signOut };
 }

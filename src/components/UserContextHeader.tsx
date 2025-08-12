@@ -72,7 +72,7 @@ export function UserContextHeader({
           </button>
           
           <button 
-            onClick={onOrganizationSettingsClick}
+            onClick={() => window.location.href = '/organization'}
             className="flex items-center gap-3 w-full px-4 py-3 text-left hover:bg-accent transition-colors"
           >
             <Settings className="h-4 w-4 text-muted-foreground" />

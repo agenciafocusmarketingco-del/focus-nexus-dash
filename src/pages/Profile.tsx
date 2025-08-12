@@ -30,10 +30,10 @@ export default function Profile() {
 
   const form = useForm<ProfileFormData>({
     resolver: zodResolver(profileSchema),
-    defaultValues: {
+    values: {
       first_name: profile?.first_name || '',
       last_name: profile?.last_name || '',
-      email: '', // Email will be read-only
+      email: '',
     },
   });
 

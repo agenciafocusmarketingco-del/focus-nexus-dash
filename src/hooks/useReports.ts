@@ -9,6 +9,8 @@ export interface Report {
   title: string;
   date: string;
   description?: string | null;
+  status?: string | null;
+  author?: string | null;
 }
 
 /**

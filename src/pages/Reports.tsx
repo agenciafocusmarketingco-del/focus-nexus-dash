@@ -3,6 +3,9 @@ import { ReportsChart } from "@/components/ReportsChart";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { useReports } from "@/hooks/useReports";
+import { usePerformanceMetrics } from "@/hooks/usePerformanceMetrics";
+import LoadingSpinner from "@/components/LoadingSpinner";
 import { 
   TrendingUp, 
   Download, 
@@ -59,6 +62,17 @@ const getStatusColor = (status: string) => {
 };
 
 const Reports = () => {
+  const { reports: dbReports, loading: reportsLoading } = useReports();
+  const { metrics, loading: metricsLoading } = usePerformanceMetrics();
+
+  if (reportsLoading || metricsLoading) {
+    return (
+      <div className="flex items-center justify-center h-64">
+        <LoadingSpinner />
+      </div>
+    );
+  }
+
   return (
     <div className="space-y-6 animate-fade-in">
       {/* Header */}
@@ -171,23 +185,20 @@ const Reports = () => {
       <div>
         <h2 className="text-xl font-semibold text-white mb-4">Relatórios Disponíveis</h2>
         <div className="space-y-4">
-          {reports.map((report) => (
+          {dbReports.length > 0 ? dbReports.map((report) => (
             <Card key={report.id} className="bg-gradient-card border-border shadow-card hover:shadow-glow transition-all duration-300">
               <CardContent className="p-6">
                 <div className="flex items-center justify-between">
                   <div className="flex-1">
                     <div className="flex items-center gap-3 mb-2">
-                      <h3 className="text-lg font-semibold text-white">{report.name}</h3>
-                      <Badge variant="outline" className={getStatusColor(report.status)}>
-                        {report.status}
-                      </Badge>
-                      <Badge variant="secondary" className="text-xs">
-                        {report.type}
+                      <h3 className="text-lg font-semibold text-white">{report.title}</h3>
+                      <Badge variant="outline" className={getStatusColor(report.status || 'Rascunho')}>
+                        {report.status || 'Rascunho'}
                       </Badge>
                     </div>
                     <div className="flex items-center gap-6 text-sm text-muted-foreground">
-                      <span>Período: {report.period}</span>
-                      <span>Tamanho: {report.size}</span>
+                      <span>Data: {new Date(report.date).toLocaleDateString('pt-BR')}</span>
+                      {report.description && <span>Descrição: {report.description}</span>}
                     </div>
                   </div>
                   <div className="flex gap-2">
@@ -204,7 +215,13 @@ const Reports = () => {
                 </div>
               </CardContent>
             </Card>
-          ))}
+          )) : (
+            <Card className="bg-gradient-card border-border shadow-card">
+              <CardContent className="p-6 text-center">
+                <p className="text-muted-foreground">Nenhum relatório encontrado. Faça login para ver seus relatórios.</p>
+              </CardContent>
+            </Card>
+          )}
         </div>
       </div>
     </div>

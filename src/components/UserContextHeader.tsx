@@ -5,18 +5,16 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover
 interface UserContextHeaderProps {
   organizationName: string;
   userName: string;
-  userAvatarUrl?: string;
-  onAccountClick?: () => void;
-  onSettingsClick?: () => void;
+  avatarUrl?: string;
+  onOrganizationSettingsClick?: () => void;
   onLogoutClick?: () => void;
 }
 
 export function UserContextHeader({
   organizationName,
   userName,
-  userAvatarUrl,
-  onAccountClick,
-  onSettingsClick,
+  avatarUrl,
+  onOrganizationSettingsClick,
   onLogoutClick
 }: UserContextHeaderProps) {
   // Get user initials from name
@@ -39,15 +37,15 @@ export function UserContextHeader({
           
           <div className="h-4 border-l border-border" />
           
-          <div className="w-8 h-8 rounded-full overflow-hidden flex items-center justify-center">
-            {userAvatarUrl ? (
+          <div className="w-8 h-8 rounded-full overflow-hidden flex items-center justify-center ring-2 ring-primary/20">
+            {avatarUrl ? (
               <img 
-                src={userAvatarUrl} 
+                src={avatarUrl} 
                 alt={userName}
                 className="w-full h-full object-cover"
               />
             ) : (
-              <div className="w-full h-full bg-primary flex items-center justify-center">
+              <div className="w-full h-full bg-gradient-primary flex items-center justify-center">
                 <span className="text-primary-foreground text-sm font-bold">
                   {getUserInitials(userName)}
                 </span>
@@ -66,7 +64,7 @@ export function UserContextHeader({
       >
         <div className="py-2">
           <button 
-            onClick={onAccountClick}
+            onClick={() => window.location.href = '/profile'}
             className="flex items-center gap-3 w-full px-4 py-3 text-left hover:bg-accent transition-colors"
           >
             <User className="h-4 w-4 text-muted-foreground" />
@@ -74,7 +72,7 @@ export function UserContextHeader({
           </button>
           
           <button 
-            onClick={onSettingsClick}
+            onClick={onOrganizationSettingsClick}
             className="flex items-center gap-3 w-full px-4 py-3 text-left hover:bg-accent transition-colors"
           >
             <Settings className="h-4 w-4 text-muted-foreground" />

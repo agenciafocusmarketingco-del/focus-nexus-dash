@@ -21,6 +21,7 @@ import Reports from "./pages/Reports";
 import Performance from "./pages/Performance";
 import Chat from "./pages/Chat";
 import FocusExperience from "./pages/FocusExperience";
+import Profile from "./pages/Profile";
 import Auth from "./pages/Auth";
 import NotFound from "./pages/NotFound";
 
@@ -81,6 +82,7 @@ const App = () => (
                         <Route path="/identidade-visual" element={<IdentidadeVisual />} />
                         <Route path="/performance" element={<Performance />} />
                         <Route path="/focus-experience" element={<FocusExperience />} />
+                        <Route path="/profile" element={<Profile />} />
                         <Route path="/settings" element={<NotFound />} />
                         <Route path="/help" element={<NotFound />} />
                         <Route path="/social" element={<SocialMedia />} />

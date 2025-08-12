@@ -8,6 +8,7 @@ export interface UserProfile {
   first_name: string | null;
   last_name: string | null;
   role: string;
+  avatar_url: string | null;
   client: {
     id: string;
     name: string;

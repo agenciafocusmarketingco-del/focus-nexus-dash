@@ -1,0 +1,49 @@
+{
+  "name": "Focus Company",
+  "short_name": "Focus",
+  "description": "Agência inovadora de marketing, automação e audiovisual — Focus Estúdios.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#000000",
+  "theme_color": "#FF6600",
+  "orientation": "portrait",
+  "scope": "/",
+  "icons": [
+    {
+      "src": "/focus-icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/focus-icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["business", "productivity", "lifestyle"],
+  "shortcuts": [
+    {
+      "name": "Dashboard",
+      "short_name": "Dashboard",
+      "description": "Acesse o painel principal",
+      "url": "/",
+      "icons": [{ "src": "/focus-icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Projetos",
+      "short_name": "Projetos",
+      "description": "Gerencie seus projetos",
+      "url": "/projects",
+      "icons": [{ "src": "/focus-icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Relatórios",
+      "short_name": "Relatórios",
+      "description": "Visualize relatórios e métricas",
+      "url": "/reports",
+      "icons": [{ "src": "/focus-icon-192.png", "sizes": "192x192" }]
+    }
+  ]
+}

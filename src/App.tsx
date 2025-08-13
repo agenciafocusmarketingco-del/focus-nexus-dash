@@ -6,6 +6,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AppSidebar } from "@/components/AppSidebar";
 import { AuthGuard } from "@/components/AuthGuard";
+import { PWAInstallPrompt } from "@/components/PWAInstallPrompt";
 import { UserContextHeader } from "@/components/UserContextHeader";
 import { useProfile } from "@/hooks/useProfile";
 import { useAuth } from "@/hooks/useAuth";
@@ -64,6 +65,7 @@ const App = () => (
     <TooltipProvider>
       <Toaster />
       <Sonner />
+      <PWAInstallPrompt />
       <BrowserRouter>
         <Routes>
           <Route path="/auth" element={<Auth />} />

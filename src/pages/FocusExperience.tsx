@@ -387,7 +387,10 @@ const FocusExperience = () => {
                 <BookMarked className="h-5 w-5 mr-2" />
                 Matrícula Online
               </Button>
-              <Button variant="outline" size="lg">
+              <Button variant="outline" size="lg" onClick={() => {
+                window.open("https://preview--focus-spark-portal.lovable.app/", "_blank");
+                notificationService.success("Redirecionando para o Portal do Aluno...");
+              }}>
                 <PlayCircle className="h-5 w-5 mr-2" />
                 Portal do Aluno
               </Button>

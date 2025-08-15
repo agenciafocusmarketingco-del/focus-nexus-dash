@@ -20,8 +20,119 @@ import {
   ExternalLink,
   Eye,
   Heart,
-  ChevronRight
+  ChevronRight,
+  Send,
+  Paperclip,
+  Phone,
+  Video,
+  Users,
+  Settings,
+  Headphones,
+  Target,
+  Zap,
+  Code,
+  Plus,
+  FileText,
+  AlertCircle,
+  CheckCircle,
+  Timer
 } from "lucide-react";
+
+const teamSectors = [
+  {
+    id: 1,
+    name: "Comercial",
+    description: "Vendas, propostas e novos projetos",
+    icon: Building,
+    team: ["Ana Silva - Consultora", "Pedro Costa - Gerente"],
+    online: 2,
+    color: "text-blue-500"
+  },
+  {
+    id: 2,
+    name: "Tráfego Pago",
+    description: "Campanhas, otimização e resultados",
+    icon: Target,
+    team: ["Carlos Lima - Especialista", "Maria Santos - Analista"],
+    online: 1,
+    color: "text-green-500"
+  },
+  {
+    id: 3,
+    name: "Focus Estúdios",
+    description: "Audiovisual, edição e produção",
+    icon: Video,
+    team: ["João Silva - Editor", "Laura Mendes - Produtora"],
+    online: 2,
+    color: "text-purple-500"
+  },
+  {
+    id: 4,
+    name: "Tech & Desenvolvimento",
+    description: "Sites, sistemas e suporte técnico",
+    icon: Code,
+    team: ["Rafael Tech - Dev Lead", "Bruno Code - Frontend"],
+    online: 1,
+    color: "text-orange-500"
+  }
+];
+
+const tickets = [
+  {
+    id: "T001",
+    title: "Revisão da campanha Black Friday",
+    sector: "Tráfego Pago",
+    status: "Aberto",
+    priority: "Alta",
+    created: "2h atrás",
+    lastUpdate: "30min atrás"
+  },
+  {
+    id: "T002", 
+    title: "Ajuste no vídeo institucional",
+    sector: "Focus Estúdios",
+    status: "Em Andamento",
+    priority: "Média",
+    created: "1 dia atrás",
+    lastUpdate: "2h atrás"
+  },
+  {
+    id: "T003",
+    title: "Bug no formulário de contato",
+    sector: "Tech & Desenvolvimento", 
+    status: "Resolvido",
+    priority: "Alta",
+    created: "3 dias atrás",
+    lastUpdate: "1 dia atrás"
+  }
+];
+
+const messages = [
+  {
+    id: 1,
+    sender: "Carlos Lima - Tráfego Pago",
+    content: "Olá! Vi que você quer revisar a campanha. Vou enviar o relatório de performance agora.",
+    time: "14:30",
+    isOwn: false,
+    sector: "Tráfego Pago"
+  },
+  {
+    id: 2,
+    sender: "Você",
+    content: "Perfeito! Também gostaria de discutir as palavras-chave que não estão convertendo bem.",
+    time: "14:32",
+    isOwn: true,
+    sector: "Tráfego Pago"
+  },
+  {
+    id: 3,
+    sender: "Carlos Lima - Tráfego Pago",
+    content: "Claro! Identifiquei algumas que precisam de ajuste. Que tal uma call rápida às 16h?",
+    time: "14:35",
+    isOwn: false,
+    sector: "Tráfego Pago"
+  }
+];
 
 const focusNews = [
   {
@@ -93,34 +204,6 @@ const focusNews = [
     isFavorite: false,
     tags: ["IA", "ChatGPT", "Copywriting", "Automação"],
     image: "/lovable-uploads/c20312c1-8c91-4294-929b-ca8e8714c5d0.png"
-  },
-  {
-    id: 6,
-    title: "Growth Hacking: 7 estratégias que fizeram startups crescerem 1000%",
-    summary: "Cases reais de empresas que aplicaram técnicas de growth hacking para escalar rapidamente no mercado brasileiro.",
-    category: "Growth & Startups",
-    readTime: "8 min",
-    publishedAt: "2 dias atrás",
-    author: "Focus Team",
-    views: 4.2,
-    likes: 234,
-    isFavorite: true,
-    tags: ["Growth Hacking", "Startups", "Escalabilidade", "Cases"],
-    image: "/lovable-uploads/c20312c1-8c91-4294-929b-ca8e8714c5d0.png"
-  },
-  {
-    id: 7,
-    title: "Futuro do Trabalho: Como o metaverso está mudando o marketing B2B",
-    summary: "Empresas começam a explorar realidade virtual e aumentada para criar experiências imersivas de marca.",
-    category: "Tendências do Futuro",
-    readTime: "7 min",
-    publishedAt: "3 dias atrás",
-    author: "Focus Team",
-    views: 2.8,
-    likes: 167,
-    isFavorite: false,
-    tags: ["Metaverso", "VR", "AR", "B2B", "Futuro"],
-    image: "/lovable-uploads/c20312c1-8c91-4294-929b-ca8e8714c5d0.png"
   }
 ];
 
@@ -140,6 +223,19 @@ const handleSaveToFavorites = (newsId: number) => {
 
 const handleShare = (newsTitle: string) => {
   notificationService.info(`Compartilhando: ${newsTitle}`);
+};
+
+const handleStartChat = (sectorName: string) => {
+  notificationService.success(`Conectando com a equipe de ${sectorName}...`);
+};
+
+const handleCreateTicket = () => {
+  notificationService.success("Novo chamado criado com sucesso!");
+};
+
+const handleWhatsAppContact = () => {
+  window.open("https://wa.me/5511999999999?text=Olá! Gostaria de falar com a equipe Focus.", "_blank");
+  notificationService.success("Redirecionando para WhatsApp...");
 };
 
 const Chat = () => {
@@ -166,12 +262,211 @@ const Chat = () => {
         </div>
       </div>
 
-      <Tabs defaultValue="news" className="space-y-6">
+      <Tabs defaultValue="team" className="space-y-6">
         <TabsList className="grid w-full grid-cols-3">
-          <TabsTrigger value="news">Focus News</TabsTrigger>
-          <TabsTrigger value="favorites">Favoritos</TabsTrigger>
-          <TabsTrigger value="chat">Chat Suporte</TabsTrigger>
+          <TabsTrigger value="team" className="flex items-center gap-2">
+            <MessageCircle className="h-4 w-4" />
+            Comunicação com a Equipe
+          </TabsTrigger>
+          <TabsTrigger value="news" className="flex items-center gap-2">
+            <Newspaper className="h-4 w-4" />
+            Focus News
+          </TabsTrigger>
+          <TabsTrigger value="favorites" className="flex items-center gap-2">
+            <Bookmark className="h-4 w-4" />
+            Favoritos
+          </TabsTrigger>
         </TabsList>
+
+        <TabsContent value="team" className="space-y-6">
+          {/* Quick Contact Button */}
+          <div className="mb-6">
+            <Button 
+              size="lg" 
+              className="w-full bg-primary hover:bg-primary/90 text-white font-semibold py-4"
+              onClick={handleWhatsAppContact}
+            >
+              <MessageCircle className="h-5 w-5 mr-2" />
+              Falar com a Equipe Agora
+            </Button>
+          </div>
+
+          {/* Team Sectors */}
+          <Card className="bg-gradient-card border-border shadow-card mb-6">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Users className="h-5 w-5 text-primary" />
+                Setores da Equipe
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {teamSectors.map((sector) => {
+                  const IconComponent = sector.icon;
+                  return (
+                    <div key={sector.id} className="p-4 border border-border rounded-lg bg-card hover:bg-accent transition-colors">
+                      <div className="flex items-start justify-between mb-3">
+                        <div className="flex items-center gap-3">
+                          <div className="p-2 bg-primary/10 rounded-lg">
+                            <IconComponent className={`h-6 w-6 ${sector.color}`} />
+                          </div>
+                          <div>
+                            <h4 className="font-semibold text-foreground">{sector.name}</h4>
+                            <p className="text-sm text-muted-foreground">{sector.description}</p>
+                          </div>
+                        </div>
+                        <Badge variant="secondary" className="text-xs">
+                          {sector.online} online
+                        </Badge>
+                      </div>
+                      
+                      <div className="mb-3">
+                        <p className="text-xs text-muted-foreground mb-1">Equipe:</p>
+                        {sector.team.map((member, index) => (
+                          <p key={index} className="text-sm text-foreground">• {member}</p>
+                        ))}
+                      </div>
+
+                      <div className="flex gap-2">
+                        <Button 
+                          size="sm" 
+                          className="flex-1"
+                          onClick={() => handleStartChat(sector.name)}
+                        >
+                          <MessageCircle className="h-4 w-4 mr-1" />
+                          Chat
+                        </Button>
+                        <Button 
+                          size="sm" 
+                          variant="outline"
+                          onClick={() => {
+                            notificationService.info(`Agendando call com ${sector.name}...`);
+                          }}
+                        >
+                          <Phone className="h-4 w-4" />
+                        </Button>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Active Chat */}
+          <Card className="bg-gradient-card border-border shadow-card mb-6">
+            <CardHeader className="border-b border-border">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <div className="p-2 bg-green-500/10 rounded-lg">
+                    <Target className="h-5 w-5 text-green-500" />
+                  </div>
+                  <div>
+                    <CardTitle className="text-lg">Tráfego Pago</CardTitle>
+                    <p className="text-sm text-muted-foreground">Carlos Lima está online</p>
+                  </div>
+                </div>
+                <div className="flex gap-2">
+                  <Button size="sm" variant="outline">
+                    <Phone className="h-4 w-4" />
+                  </Button>
+                  <Button size="sm" variant="outline">
+                    <Video className="h-4 w-4" />
+                  </Button>
+                </div>
+              </div>
+            </CardHeader>
+            <CardContent className="p-4">
+              <div className="h-64 overflow-y-auto mb-4 space-y-3">
+                {messages.map((message) => (
+                  <div 
+                    key={message.id} 
+                    className={`flex ${message.isOwn ? 'justify-end' : 'justify-start'}`}
+                  >
+                    <div className={`max-w-[80%] ${message.isOwn ? 'order-2' : 'order-1'}`}>
+                      {!message.isOwn && (
+                        <p className="text-xs text-muted-foreground mb-1">{message.sender}</p>
+                      )}
+                      <div className={`p-3 rounded-lg ${
+                        message.isOwn 
+                          ? 'bg-primary text-white' 
+                          : 'bg-muted'
+                      }`}>
+                        <p className="text-sm">{message.content}</p>
+                        <p className="text-xs opacity-70 mt-1">{message.time}</p>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+              
+              <div className="flex gap-2">
+                <Button size="sm" variant="outline">
+                  <Paperclip className="h-4 w-4" />
+                </Button>
+                <Input 
+                  placeholder="Digite sua mensagem..." 
+                  className="flex-1"
+                />
+                <Button size="sm">
+                  <Send className="h-4 w-4" />
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Tickets Section */}
+          <Card className="bg-gradient-card border-border shadow-card">
+            <CardHeader>
+              <div className="flex items-center justify-between">
+                <CardTitle className="flex items-center gap-2">
+                  <FileText className="h-5 w-5 text-primary" />
+                  Meus Chamados
+                </CardTitle>
+                <Button size="sm" onClick={handleCreateTicket}>
+                  <Plus className="h-4 w-4 mr-1" />
+                  Novo Chamado
+                </Button>
+              </div>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-3">
+                {tickets.map((ticket) => (
+                  <div key={ticket.id} className="p-4 border border-border rounded-lg bg-card">
+                    <div className="flex items-start justify-between mb-2">
+                      <div className="flex-1">
+                        <div className="flex items-center gap-2 mb-1">
+                          <span className="font-mono text-sm text-muted-foreground">#{ticket.id}</span>
+                          <Badge 
+                            variant={
+                              ticket.status === "Aberto" ? "destructive" :
+                              ticket.status === "Em Andamento" ? "default" : "secondary"
+                            }
+                            className="text-xs"
+                          >
+                            {ticket.status}
+                          </Badge>
+                          <Badge 
+                            variant={ticket.priority === "Alta" ? "destructive" : "outline"}
+                            className="text-xs"
+                          >
+                            {ticket.priority}
+                          </Badge>
+                        </div>
+                        <h4 className="font-medium text-foreground mb-1">{ticket.title}</h4>
+                        <p className="text-sm text-muted-foreground">{ticket.sector}</p>
+                      </div>
+                    </div>
+                    <div className="flex items-center justify-between text-xs text-muted-foreground">
+                      <span>Criado {ticket.created}</span>
+                      <span>Atualizado {ticket.lastUpdate}</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+        </TabsContent>
 
         <TabsContent value="news" className="space-y-6">
           {/* News Categories */}
@@ -314,7 +609,6 @@ const Chat = () => {
             ))}
           </div>
         </TabsContent>
-
         <TabsContent value="favorites" className="space-y-6">
           <Card className="bg-gradient-card border-border shadow-card">
             <CardHeader>
@@ -367,38 +661,6 @@ const Chat = () => {
                   ))}
                 </div>
               )}
-            </CardContent>
-          </Card>
-        </TabsContent>
-
-        <TabsContent value="chat" className="space-y-6">
-          <Card className="bg-gradient-card border-border shadow-card">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <MessageCircle className="h-5 w-5 text-primary" />
-                Chat de Suporte
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="text-center py-12">
-                <MessageCircle className="h-16 w-16 text-muted-foreground mx-auto mb-6" />
-                <h3 className="text-xl font-semibold text-foreground mb-3">Chat em Desenvolvimento</h3>
-                <p className="text-muted-foreground mb-6 max-w-md mx-auto">
-                  Estamos preparando uma experiência incrível de comunicação para você. Em breve você poderá conversar diretamente com nossa equipe.
-                </p>
-                <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                  <Button variant="outline">
-                    <MessageCircle className="h-4 w-4 mr-2" />
-                    WhatsApp
-                  </Button>
-                  <Button variant="outline">
-                    📧 Email
-                  </Button>
-                  <Button variant="outline">
-                    📞 Telefone
-                  </Button>
-                </div>
-              </div>
             </CardContent>
           </Card>
         </TabsContent>

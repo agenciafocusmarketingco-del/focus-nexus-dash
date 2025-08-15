@@ -19,7 +19,17 @@ import {
   Filter,
   Heart,
   MessageCircle,
-  Share2
+  Share2,
+  GraduationCap,
+  Trophy,
+  Target,
+  Lightbulb,
+  Rocket,
+  Brain,
+  TrendingUp,
+  Award,
+  BookMarked,
+  PlayCircle
 } from "lucide-react";
 
 const FocusExperience = () => {
@@ -53,35 +63,96 @@ const FocusExperience = () => {
     }
   ];
 
-  const cursos = [
+  const focusSchoolCourses = [
     {
-      title: "Facebook Ads: Do Zero ao Expert",
-      instructor: "Carlos Silva - Focus Team",
-      duration: "8h 30min",
+      title: "Marketing & Branding",
+      description: "Construa marcas que conectam e vendem",
+      duration: "12h",
       modules: 24,
-      students: 450,
+      students: 680,
       rating: 4.9,
       level: "Intermediário",
+      icon: Target,
+      category: "Marketing",
+      price: "R$ 397",
       image: "/lovable-uploads/c20312c1-8c91-4294-929b-ca8e8714c5d0.png"
     },
     {
-      title: "Google Analytics 4: Métricas que Importam",
-      instructor: "Ana Costa - Focus Team",
-      duration: "6h 15min",
-      modules: 18,
-      students: 320,
+      title: "Edição e Videomaker",
+      description: "Domine a arte da criação audiovisual",
+      duration: "16h",
+      modules: 32,
+      students: 420,
       rating: 4.8,
       level: "Iniciante",
+      icon: Video,
+      category: "Audiovisual",
+      price: "R$ 497",
       image: "/lovable-uploads/c20312c1-8c91-4294-929b-ca8e8714c5d0.png"
     },
     {
-      title: "Funis de Vendas de Alta Conversão",
-      instructor: "Pedro Santos - Focus Team",
-      duration: "5h 45min",
-      modules: 15,
-      students: 280,
+      title: "Growth Marketing",
+      description: "Estratégias para crescimento exponencial",
+      duration: "10h",
+      modules: 20,
+      students: 350,
       rating: 4.9,
       level: "Avançado",
+      icon: TrendingUp,
+      category: "Growth",
+      price: "R$ 597",
+      image: "/lovable-uploads/c20312c1-8c91-4294-929b-ca8e8714c5d0.png"
+    },
+    {
+      title: "Skills do Século 21",
+      description: "Competências essenciais para o futuro",
+      duration: "8h",
+      modules: 16,
+      students: 520,
+      rating: 4.7,
+      level: "Iniciante",
+      icon: Lightbulb,
+      category: "Soft Skills",
+      price: "R$ 297",
+      image: "/lovable-uploads/c20312c1-8c91-4294-929b-ca8e8714c5d0.png"
+    },
+    {
+      title: "Empreendedorismo",
+      description: "Do sonho ao negócio de sucesso",
+      duration: "14h",
+      modules: 28,
+      students: 380,
+      rating: 4.8,
+      level: "Intermediário",
+      icon: Rocket,
+      category: "Negócios",
+      price: "R$ 497",
+      image: "/lovable-uploads/c20312c1-8c91-4294-929b-ca8e8714c5d0.png"
+    },
+    {
+      title: "Neuromarketing e Comunicação Persuasiva",
+      description: "A ciência por trás das decisões de compra",
+      duration: "9h",
+      modules: 18,
+      students: 290,
+      rating: 4.9,
+      level: "Avançado",
+      icon: Brain,
+      category: "Psicologia",
+      price: "R$ 697",
+      image: "/lovable-uploads/c20312c1-8c91-4294-929b-ca8e8714c5d0.png"
+    },
+    {
+      title: "Funil de Vendas e Social Media",
+      description: "Conversão através das redes sociais",
+      duration: "11h",
+      modules: 22,
+      students: 450,
+      rating: 4.8,
+      level: "Intermediário",
+      icon: Users,
+      category: "Social Media",
+      price: "R$ 397",
       image: "/lovable-uploads/c20312c1-8c91-4294-929b-ca8e8714c5d0.png"
     }
   ];
@@ -182,8 +253,9 @@ const FocusExperience = () => {
       </div>
 
       <Tabs defaultValue="content" className="space-y-6">
-        <TabsList className="grid w-full grid-cols-3">
+        <TabsList className="grid w-full grid-cols-4">
           <TabsTrigger value="content">Conteúdos</TabsTrigger>
+          <TabsTrigger value="school">Focus School</TabsTrigger>
           <TabsTrigger value="events">Eventos</TabsTrigger>
           <TabsTrigger value="community">Comunidade</TabsTrigger>
         </TabsList>
@@ -241,26 +313,24 @@ const FocusExperience = () => {
               </CardContent>
             </Card>
 
-            {/* Cursos */}
+            {/* Preview Cursos Focus School */}
             <Card className="bg-gradient-card border-border shadow-card">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
-                  <Video className="h-5 w-5 text-primary" />
-                  Cursos Online
+                  <GraduationCap className="h-5 w-5 text-primary" />
+                  Cursos Focus School
                 </CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
-                  {cursos.map((curso, index) => (
+                  {focusSchoolCourses.slice(0, 3).map((curso, index) => (
                     <div key={index} className="flex gap-4 p-4 border border-border rounded-lg bg-card hover:bg-accent transition-colors">
-                      <img 
-                        src={curso.image} 
-                        alt={curso.title}
-                        className="w-16 h-12 object-cover rounded"
-                      />
+                      <div className="p-3 bg-primary/10 rounded-lg">
+                        <curso.icon className="h-6 w-6 text-primary" />
+                      </div>
                       <div className="flex-1">
                         <h4 className="font-medium text-foreground mb-1">{curso.title}</h4>
-                        <p className="text-sm text-muted-foreground mb-2">{curso.instructor}</p>
+                        <p className="text-sm text-muted-foreground mb-2">{curso.description}</p>
                         <div className="flex items-center gap-4 text-xs text-muted-foreground mb-2">
                           <span className="flex items-center gap-1">
                             <Clock className="h-3 w-3" />
@@ -279,19 +349,135 @@ const FocusExperience = () => {
                           </div>
                           <Button 
                             size="sm"
-                            onClick={() => notificationService.info(`Abrindo curso: ${curso.title}`)}
+                            onClick={() => notificationService.info(`Ver curso: ${curso.title} na Focus School`)}
                           >
-                            <Play className="h-4 w-4 mr-1" />
-                            Assistir
+                            <GraduationCap className="h-4 w-4 mr-1" />
+                            Ver Curso
                           </Button>
                         </div>
                       </div>
                     </div>
                   ))}
+                  <div className="text-center pt-4">
+                    <Button variant="outline" className="w-full">
+                      <GraduationCap className="h-4 w-4 mr-2" />
+                      Ver Todos os Cursos na Focus School
+                    </Button>
+                  </div>
                 </div>
               </CardContent>
             </Card>
           </div>
+        </TabsContent>
+
+        <TabsContent value="school" className="space-y-6">
+          {/* Focus School Header */}
+          <div className="text-center mb-8 p-8 bg-gradient-to-br from-primary/5 to-primary/10 rounded-xl border border-primary/20">
+            <div className="flex justify-center mb-4">
+              <div className="p-4 bg-primary/10 rounded-full">
+                <GraduationCap className="h-12 w-12 text-primary" />
+              </div>
+            </div>
+            <h2 className="text-3xl font-bold text-foreground mb-3">Focus School</h2>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-6">
+              Aprenda com a Focus School: inovação, marketing e as habilidades do futuro.
+            </p>
+            <div className="flex flex-wrap justify-center gap-4">
+              <Button size="lg" className="bg-primary hover:bg-primary/90">
+                <BookMarked className="h-5 w-5 mr-2" />
+                Matrícula Online
+              </Button>
+              <Button variant="outline" size="lg">
+                <PlayCircle className="h-5 w-5 mr-2" />
+                Portal do Aluno
+              </Button>
+              <Button variant="outline" size="lg">
+                <Trophy className="h-5 w-5 mr-2" />
+                Meu Progresso
+              </Button>
+            </div>
+          </div>
+
+          {/* Courses Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {focusSchoolCourses.map((course, index) => {
+              const IconComponent = course.icon;
+              return (
+                <Card key={index} className="bg-gradient-card border-border shadow-card hover:shadow-lg transition-all duration-300 hover:scale-105">
+                  <CardHeader className="pb-4">
+                    <div className="flex items-center justify-between mb-3">
+                      <div className="p-3 bg-primary/10 rounded-lg">
+                        <IconComponent className="h-6 w-6 text-primary" />
+                      </div>
+                      <Badge variant="outline">{course.category}</Badge>
+                    </div>
+                    <CardTitle className="text-lg leading-tight">{course.title}</CardTitle>
+                    <p className="text-sm text-muted-foreground">{course.description}</p>
+                  </CardHeader>
+                  <CardContent className="pt-0">
+                    <div className="space-y-3 mb-4">
+                      <div className="flex items-center justify-between text-sm text-muted-foreground">
+                        <span className="flex items-center gap-1">
+                          <Clock className="h-4 w-4" />
+                          {course.duration}
+                        </span>
+                        <span>{course.modules} módulos</span>
+                      </div>
+                      <div className="flex items-center justify-between text-sm text-muted-foreground">
+                        <span className="flex items-center gap-1">
+                          <Users className="h-4 w-4" />
+                          {course.students} alunos
+                        </span>
+                        <Badge variant="outline">{course.level}</Badge>
+                      </div>
+                      <div className="flex items-center gap-1">
+                        {renderStars(course.rating)}
+                        <span className="text-sm ml-1">{course.rating}</span>
+                      </div>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <div className="text-xl font-bold text-primary">{course.price}</div>
+                      <Button 
+                        size="sm"
+                        onClick={() => {
+                          notificationService.success(`Matriculando em ${course.title}!`);
+                        }}
+                      >
+                        <GraduationCap className="h-4 w-4 mr-1" />
+                        Matricular
+                      </Button>
+                    </div>
+                  </CardContent>
+                </Card>
+              );
+            })}
+          </div>
+
+          {/* Gamification Section */}
+          <Card className="bg-gradient-to-r from-primary/5 to-primary/10 border-primary/20">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Trophy className="h-5 w-5 text-primary" />
+                Seu Progresso de Aprendizagem
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div className="text-center p-4 bg-card rounded-lg border border-border">
+                  <div className="text-3xl font-bold text-primary mb-2">3</div>
+                  <p className="text-sm text-muted-foreground">Cursos Concluídos</p>
+                </div>
+                <div className="text-center p-4 bg-card rounded-lg border border-border">
+                  <div className="text-3xl font-bold text-primary mb-2">47h</div>
+                  <p className="text-sm text-muted-foreground">Horas de Estudo</p>
+                </div>
+                <div className="text-center p-4 bg-card rounded-lg border border-border">
+                  <div className="text-3xl font-bold text-primary mb-2">12</div>
+                  <p className="text-sm text-muted-foreground">Badges Conquistadas</p>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
         </TabsContent>
 
         <TabsContent value="events" className="space-y-6">

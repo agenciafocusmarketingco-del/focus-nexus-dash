@@ -24,6 +24,7 @@ import Chat from "./pages/Chat";
 import FocusExperience from "./pages/FocusExperience";
 import Profile from "./pages/Profile";
 import OrganizationSettings from "./pages/OrganizationSettings";
+import Settings from "./pages/Settings";
 import Auth from "./pages/Auth";
 import NotFound from "./pages/NotFound";
 
@@ -87,7 +88,7 @@ const App = () => (
                         <Route path="/focus-experience" element={<FocusExperience />} />
                         <Route path="/profile" element={<Profile />} />
                         <Route path="/organization" element={<OrganizationSettings />} />
-                        <Route path="/settings" element={<NotFound />} />
+                        <Route path="/settings" element={<Settings />} />
                         <Route path="/help" element={<NotFound />} />
                         <Route path="/social" element={<SocialMedia />} />
                         <Route path="/development" element={<Development />} />

@@ -383,7 +383,10 @@ const FocusExperience = () => {
               Aprenda com a Focus School: inovação, marketing e as habilidades do futuro.
             </p>
             <div className="flex flex-wrap justify-center gap-4">
-              <Button size="lg" className="bg-primary hover:bg-primary/90">
+              <Button size="lg" className="bg-primary hover:bg-primary/90" onClick={() => {
+                window.open("https://lovable.dev/projects/bc1282ff-cc85-4a53-a2bc-541d3d9eb346", "_blank");
+                notificationService.success("Redirecionando para matrícula online...");
+              }}>
                 <BookMarked className="h-5 w-5 mr-2" />
                 Matrícula Online
               </Button>

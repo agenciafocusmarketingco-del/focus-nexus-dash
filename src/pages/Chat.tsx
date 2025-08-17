@@ -529,7 +529,9 @@ const Chat = () => {
                         {focusNews[0].views}k visualizações
                       </span>
                     </div>
-                    <Button>
+                    <Button onClick={() => {
+                      window.open("https://preview--wiktok-517.lovable.app/?q=Rainbow%20(rock%20band)", "_blank");
+                    }}>
                       Ler Artigo Completo
                       <ChevronRight className="h-4 w-4 ml-1" />
                     </Button>

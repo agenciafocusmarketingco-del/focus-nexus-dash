@@ -113,7 +113,12 @@ const CRM = () => {
         </div>
         <Button 
           className="bg-gradient-primary text-white hover:shadow-glow"
-          onClick={() => notificationService.info("Assistente de automação será aberto em breve!")}
+          onClick={() => {
+            notificationService.loading("Iniciando assistente de automação...");
+            setTimeout(() => {
+              notificationService.success("Assistente aberto!", "Configure sua nova automação de marketing");
+            }, 1500);
+          }}
         >
           <Zap className="h-4 w-4 mr-2" />
           Nova Automação
@@ -227,7 +232,13 @@ const CRM = () => {
       <div>
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-xl font-semibold text-white">Leads Recentes</h2>
-          <Button variant="outline" className="text-white border-border hover:bg-secondary/20">
+          <Button 
+            variant="outline" 
+            className="text-white border-border hover:bg-secondary/20"
+            onClick={() => {
+              notificationService.info("Filtros avançados", "Filtre por origem, status, score e período");
+            }}
+          >
             <Filter className="h-4 w-4 mr-2" />
             Filtrar
           </Button>

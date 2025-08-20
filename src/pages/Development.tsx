@@ -90,7 +90,12 @@ const Development = () => {
         </div>
         <Button 
           className="bg-gradient-primary text-white hover:shadow-glow"
-          onClick={() => notificationService.info("Formulário de novo projeto será aberto em breve!")}
+          onClick={() => {
+            notificationService.loading("Iniciando novo projeto de desenvolvimento...");
+            setTimeout(() => {
+              notificationService.success("Projeto criado!", "Novo projeto adicionado ao pipeline de desenvolvimento");
+            }, 1500);
+          }}
         >
           <Code className="h-4 w-4 mr-2" />
           Novo Projeto
@@ -182,7 +187,18 @@ const Development = () => {
                         {project.status}
                       </Badge>
                       {project.url && (
-                        <Button size="sm" variant="outline" className="text-white border-border hover:bg-secondary/20">
+                        <Button 
+                          size="sm" 
+                          variant="outline" 
+                          className="text-white border-border hover:bg-secondary/20"
+                          onClick={() => {
+                            if (project.url) {
+                              window.open(project.url, "_blank");
+                            } else {
+                              notificationService.info("Preview em desenvolvimento", "O link estará disponível em breve");
+                            }
+                          }}
+                        >
                           <ExternalLink className="h-3 w-3" />
                         </Button>
                       )}

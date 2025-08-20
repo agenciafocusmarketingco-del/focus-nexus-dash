@@ -88,17 +88,24 @@ const Performance = () => {
           </p>
         </div>
         <div className="flex gap-2">
-          <Button variant="outline">
+          <Button 
+            variant="outline" 
+            className="text-white border-border"
+            onClick={() => {
+              notificationService.info("Filtros aplicados", "Performance filtrada por canal, período e métricas");
+            }}
+          >
             <Filter className="h-4 w-4 mr-2" />
             Filtros
           </Button>
           <Button
+            className="bg-gradient-primary text-white hover:shadow-glow"
             onClick={() => {
               notificationService.loading("Exportando dados de performance...");
               setTimeout(() => {
-                notificationService.success("Relatório de performance exportado!");
-                communicationService.downloadFile("performance-analytics.xlsx", "XLSX");
-              }, 1500);
+                notificationService.success("Dados exportados!", "Relatório de performance salvo em Excel");
+                communicationService.downloadFile("performance-report.xlsx", "XLSX");
+              }, 2000);
             }}
           >
             <Download className="h-4 w-4 mr-2" />

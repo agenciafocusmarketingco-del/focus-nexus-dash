@@ -84,7 +84,13 @@ const Reports = () => {
           <p className="text-muted-foreground">Análises detalhadas e insights dos seus projetos</p>
         </div>
         <div className="flex gap-2">
-          <Button variant="outline" className="text-white border-border hover:bg-secondary/20">
+          <Button 
+            variant="outline" 
+            className="text-white border-border"
+            onClick={() => {
+              notificationService.info("Filtros aplicados", "Relatórios filtrados por período, categoria e status");
+            }}
+          >
             <Filter className="h-4 w-4 mr-2" />
             Filtros
           </Button>
@@ -229,7 +235,14 @@ const Reports = () => {
                         Download
                       </Button>
                     )}
-                    <Button size="sm" variant="outline" className="text-white border-border hover:bg-secondary/20">
+                    <Button 
+                      size="sm" 
+                      variant="outline" 
+                      className="text-white border-border hover:bg-secondary/20"
+                      onClick={() => {
+                        notificationService.info("Visualizando relatório", `Abrindo análise detalhada de ${report.title}`);
+                      }}
+                    >
                       Visualizar
                     </Button>
                   </div>

@@ -252,7 +252,13 @@ const IdentidadeVisual = () => {
             <div className="space-y-4">
               <div className="flex items-center justify-between">
                 <span className="text-sm text-foreground">Material de Marketing</span>
-                <Button size="sm" variant="outline">
+                <Button 
+                  size="sm"
+                  variant="outline"
+                  onClick={() => {
+                    notificationService.info("Visualizando aplicação", "Abrindo exemplos de uso da identidade visual");
+                  }}
+                >
                   <Eye className="h-4 w-4 mr-1" />
                   Ver
                 </Button>
@@ -370,12 +376,30 @@ const IdentidadeVisual = () => {
                         ))}
                       </div>
                       <div className="flex gap-2">
-                        <Button size="sm" variant="outline" className="text-white border-border hover:bg-secondary/20">
-                          <Eye className="h-3 w-3" />
-                        </Button>
-                        <Button size="sm" variant="outline" className="text-white border-border hover:bg-secondary/20">
-                          <Download className="h-3 w-3" />
-                        </Button>
+                      <Button 
+                        size="sm" 
+                        variant="outline" 
+                        className="text-white border-border hover:bg-secondary/20"
+                        onClick={() => {
+                          notificationService.info("Visualizando asset", `Abrindo preview de ${asset.name}`);
+                        }}
+                      >
+                        <Eye className="h-3 w-3" />
+                      </Button>
+                      <Button 
+                        size="sm" 
+                        variant="outline" 
+                        className="text-white border-border hover:bg-secondary/20"
+                        onClick={() => {
+                          notificationService.loading("Preparando download...");
+                          setTimeout(() => {
+                            notificationService.success("Download iniciado!", `${asset.name} baixado com sucesso`);
+                            communicationService.downloadFile(asset.name.toLowerCase().replace(/\s+/g, '-'), asset.files[0]);
+                          }, 1000);
+                        }}
+                      >
+                        <Download className="h-3 w-3" />
+                      </Button>
                       </div>
                     </div>
                   </CardContent>

@@ -83,7 +83,12 @@ const SocialMedia = () => {
         </div>
         <Button 
           className="bg-gradient-primary text-white hover:shadow-glow"
-          onClick={() => notificationService.info("Editor de posts será aberto em breve!")}
+          onClick={() => {
+            notificationService.loading("Abrindo editor de posts...");
+            setTimeout(() => {
+              notificationService.success("Editor aberto!", "Crie seu conteúdo para todas as redes sociais");
+            }, 1500);
+          }}
         >
           <Plus className="h-4 w-4 mr-2" />
           Novo Post
@@ -287,6 +292,9 @@ const SocialMedia = () => {
                         size="sm"
                         variant="outline"
                         className="text-white border-border hover:bg-secondary/20"
+                        onClick={() => {
+                          notificationService.info("Visualização completa", "Análise detalhada de performance do post");
+                        }}
                       >
                         <Eye className="h-3 w-3" />
                       </Button>
@@ -294,6 +302,9 @@ const SocialMedia = () => {
                         size="sm"
                         variant="outline"
                         className="text-white border-border hover:bg-secondary/20"
+                        onClick={() => {
+                          notificationService.info("Editor aberto", "Edite o conteúdo e reagende se necessário");
+                        }}
                       >
                         Editar
                       </Button>

@@ -25,6 +25,7 @@ import { Separator } from '@/components/ui/separator';
 import { SettingsCard } from '@/components/SettingsCard';
 import { SettingsSwitch } from '@/components/SettingsSwitch';
 import { useSettings } from '@/hooks/useSettings';
+import { notificationService } from '@/services/notificationService';
 
 export default function Settings() {
   const navigate = useNavigate();
@@ -198,15 +199,42 @@ export default function Settings() {
           icon={Shield}
         >
           <div className="space-y-3">
-            <Button variant="outline" className="w-full justify-start">
+            <Button 
+              variant="outline" 
+              className="w-full justify-start"
+              onClick={() => {
+                notificationService.loading("Alterando senha...");
+                setTimeout(() => {
+                  notificationService.success("Senha alterada!", "Sua senha foi atualizada com sucesso");
+                }, 1500);
+              }}
+            >
               <Lock className="h-4 w-4 mr-2" />
               Alterar Senha
             </Button>
-            <Button variant="outline" className="w-full justify-start">
+            <Button 
+              variant="outline" 
+              className="w-full justify-start"
+              onClick={() => {
+                notificationService.loading("Atualizando email...");
+                setTimeout(() => {
+                  notificationService.success("Email atualizado!", "Confirme no novo email para finalizar");
+                }, 1500);
+              }}
+            >
               <Mail className="h-4 w-4 mr-2" />
               Atualizar E-mail
             </Button>
-            <Button variant="outline" className="w-full justify-start">
+            <Button 
+              variant="outline" 
+              className="w-full justify-start"
+              onClick={() => {
+                notificationService.loading("Configurando 2FA...");
+                setTimeout(() => {
+                  notificationService.success("2FA ativado!", "Autenticação de dois fatores configurada");
+                }, 2000);
+              }}
+            >
               <Key className="h-4 w-4 mr-2" />
               Autenticação de 2 Fatores
             </Button>

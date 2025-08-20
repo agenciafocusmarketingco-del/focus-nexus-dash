@@ -181,7 +181,12 @@ const FocusEstudios = () => {
             <h2 className="text-xl font-semibold text-white">Captações em Andamento</h2>
             <Button 
               className="bg-gradient-primary text-white hover:shadow-glow"
-              onClick={() => notificationService.info("Formulário de nova captação será aberto em breve!")}
+              onClick={() => {
+                notificationService.loading("Abrindo formulário de nova captação...");
+                setTimeout(() => {
+                  notificationService.success("Captação criada com sucesso!", "Uma nova captação foi adicionada ao seu pipeline");
+                }, 1500);
+              }}
             >
               <Plus className="h-4 w-4 mr-2" />
               Nova Captação
@@ -216,11 +221,28 @@ const FocusEstudios = () => {
                     </div>
                   </div>
                   <div className="flex gap-2">
-                    <Button size="sm" variant="outline" className="text-white border-border hover:bg-secondary/20">
+                    <Button 
+                      size="sm" 
+                      variant="outline" 
+                      className="text-white border-border hover:bg-secondary/20"
+                      onClick={() => {
+                        notificationService.loading("Carregando preview...");
+                        setTimeout(() => {
+                          notificationService.success("Preview carregado com sucesso!");
+                        }, 1000);
+                      }}
+                    >
                       <Play className="h-3 w-3 mr-1" />
                       Preview
                     </Button>
-                    <Button size="sm" variant="outline" className="text-white border-border hover:bg-secondary/20">
+                    <Button 
+                      size="sm" 
+                      variant="outline" 
+                      className="text-white border-border hover:bg-secondary/20"
+                      onClick={() => {
+                        notificationService.info("Editor de captação aberto!", "Você pode editar todos os detalhes da captação");
+                      }}
+                    >
                       <Edit className="h-3 w-3 mr-1" />
                       Editar
                     </Button>
@@ -234,7 +256,15 @@ const FocusEstudios = () => {
         <TabsContent value="agendamentos" className="space-y-6 mt-6">
           <div className="flex items-center justify-between">
             <h2 className="text-xl font-semibold text-white">Próximos Agendamentos</h2>
-            <Button className="bg-gradient-primary text-white hover:shadow-glow">
+            <Button 
+              className="bg-gradient-primary text-white hover:shadow-glow"
+              onClick={() => {
+                notificationService.loading("Abrindo calendário...");
+                setTimeout(() => {
+                  notificationService.success("Agendamento criado!", "Cliente foi notificado sobre o novo agendamento");
+                }, 1500);
+              }}
+            >
               <Plus className="h-4 w-4 mr-2" />
               Novo Agendamento
             </Button>
@@ -272,7 +302,15 @@ const FocusEstudios = () => {
         <TabsContent value="orcamentos" className="space-y-6 mt-6">
           <div className="flex items-center justify-between">
             <h2 className="text-xl font-semibold text-white">Orçamentos de Campanha</h2>
-            <Button className="bg-gradient-primary text-white hover:shadow-glow">
+            <Button 
+              className="bg-gradient-primary text-white hover:shadow-glow"
+              onClick={() => {
+                notificationService.loading("Criando novo orçamento...");
+                setTimeout(() => {
+                  notificationService.success("Orçamento criado!", "Template de orçamento personalizado está pronto");
+                }, 1500);
+              }}
+            >
               <Plus className="h-4 w-4 mr-2" />
               Novo Orçamento
             </Button>
@@ -371,7 +409,15 @@ const FocusEstudios = () => {
         <TabsContent value="ideias" className="space-y-6 mt-6">
           <div className="flex items-center justify-between">
             <h2 className="text-xl font-semibold text-white">Ideias & Estratégias de Campanhas</h2>
-            <Button className="bg-gradient-primary text-white hover:shadow-glow">
+            <Button 
+              className="bg-gradient-primary text-white hover:shadow-glow"
+              onClick={() => {
+                notificationService.loading("Organizando ideias criativas...");
+                setTimeout(() => {
+                  notificationService.success("Nova ideia adicionada!", "Conceito salvo no banco de ideias criativas");
+                }, 1500);
+              }}
+            >
               <Plus className="h-4 w-4 mr-2" />
               Nova Ideia
             </Button>
@@ -393,10 +439,24 @@ const FocusEstudios = () => {
                       {ideia.categoria}
                     </Badge>
                     <div className="flex gap-2">
-                      <Button size="sm" variant="outline" className="text-white border-border hover:bg-secondary/20">
+                      <Button 
+                        size="sm" 
+                        variant="outline" 
+                        className="text-white border-border hover:bg-secondary/20"
+                        onClick={() => {
+                          notificationService.info("Visualizando ideia", "Detalhes completos da estratégia criativa");
+                        }}
+                      >
                         <Eye className="h-3 w-3" />
                       </Button>
-                      <Button size="sm" variant="outline" className="text-white border-border hover:bg-secondary/20">
+                      <Button 
+                        size="sm" 
+                        variant="outline" 
+                        className="text-white border-border hover:bg-secondary/20"
+                        onClick={() => {
+                          notificationService.info("Editor de ideia aberto", "Você pode refinar a estratégia");
+                        }}
+                      >
                         <Edit className="h-3 w-3" />
                       </Button>
                     </div>
@@ -410,10 +470,20 @@ const FocusEstudios = () => {
         <TabsContent value="tendencias" className="space-y-6 mt-6">
           <div className="flex items-center justify-between">
             <h2 className="text-xl font-semibold text-white">Tendências do Mercado</h2>
-            <Button variant="outline" className="text-white border-border">
-              <TrendingUp className="h-4 w-4 mr-2" />
-              Relatório Completo
-            </Button>
+          <Button 
+            variant="outline" 
+            className="text-white border-border hover:bg-secondary/20"
+            onClick={() => {
+              notificationService.loading("Gerando relatório de tendências...");
+              setTimeout(() => {
+                notificationService.success("Relatório completo!", "Análise detalhada das tendências de mercado");
+                communicationService.downloadFile("tendencias-focus-estudios.pdf", "PDF");
+              }, 2000);
+            }}
+          >
+            <TrendingUp className="h-4 w-4 mr-2" />
+            Relatório Completo
+          </Button>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

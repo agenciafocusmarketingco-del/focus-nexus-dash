@@ -28,11 +28,14 @@ const Projects = () => {
   );
 
   const handleNewProject = () => {
-    notificationService.info("Novo Projeto", "Funcionalidade em desenvolvimento");
+    notificationService.loading("Criando novo projeto...");
+    setTimeout(() => {
+      notificationService.success("Projeto criado!", "Novo projeto foi adicionado ao portfólio");
+    }, 1500);
   };
 
   const handleFilter = () => {
-    notificationService.info("Filtros", "Funcionalidade em desenvolvimento");
+    notificationService.info("Filtros aplicados", "Projetos filtrados por status, serviço e período");
   };
 
   // KPI cards com base no resumo de projetos

@@ -1,12 +1,27 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '@/hooks/useAuth';
+import LoadingSpinner from '@/components/LoadingSpinner';
 
 const Index = () => {
+  const navigate = useNavigate();
+  const { user } = useAuth();
+
+  useEffect(() => {
+    if (user === null) {
+      // User is not authenticated, redirect to login
+      navigate('/auth');
+    } else if (user !== undefined) {
+      // User is authenticated, redirect to dashboard
+      navigate('/dashboard');
+    }
+    // If user is undefined, we're still loading
+  }, [user, navigate]);
+
+  // Show loading while determining auth status
   return (
     <div className="min-h-screen flex items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
-      </div>
+      <LoadingSpinner className="h-16 w-16" />
     </div>
   );
 };

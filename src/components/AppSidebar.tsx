@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
-import { BarChart3, Briefcase, Calendar, Globe, MessageCircle, Palette, Settings, Target, TrendingUp, Users, Video, Zap, LogOut } from "lucide-react";
+import { BarChart3, Briefcase, Calendar, Globe, MessageCircle, Palette, Settings, Target, TrendingUp, Users, Video, Zap, LogOut, HelpCircle, Star } from "lucide-react";
 import { Sidebar, SidebarContent, SidebarGroup, SidebarGroupContent, SidebarGroupLabel, SidebarMenu, SidebarMenuButton, SidebarMenuItem, SidebarFooter, useSidebar } from "@/components/ui/sidebar";
 
 // Import the Focus logo
@@ -60,9 +60,9 @@ const supportItems = [{
   url: "/settings",
   icon: Settings
 }, {
-  title: "Ajuda",
+  title: "Ajuda & Suporte",
   url: "/help",
-  icon: Users
+  icon: HelpCircle
 }];
 export function AppSidebar() {
   const {
@@ -175,9 +175,15 @@ export function AppSidebar() {
 
         {/* Rating Button */}
         <div className="mt-8 px-2">
-          <button className="w-full text-left text-white hover:bg-white/10 p-2 rounded-lg transition-colors">
-            {!collapsed ? <span className="text-sm">⭐ Avaliar Atendimento</span> : <span className="flex justify-center">⭐</span>}
-          </button>
+          <NavLink 
+            to="/service-evaluation"
+            className="block w-full text-left text-white hover:bg-white/10 p-2 rounded-lg transition-colors"
+          >
+            <div className="flex items-center gap-2">
+              <Star className={`h-4 w-4 ${collapsed ? "mx-auto" : ""}`} />
+              {!collapsed && <span className="text-sm">Avaliar Atendimento</span>}
+            </div>
+          </NavLink>
         </div>
       </SidebarContent>
 

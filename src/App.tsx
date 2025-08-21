@@ -25,6 +25,8 @@ import FocusExperience from "./pages/FocusExperience";
 import Profile from "./pages/Profile";
 import OrganizationSettings from "./pages/OrganizationSettings";
 import Settings from "./pages/Settings";
+import Help from "./pages/Help";
+import ServiceEvaluation from "./pages/ServiceEvaluation";
 import Auth from "./pages/Auth";
 import NotFound from "./pages/NotFound";
 
@@ -89,7 +91,8 @@ const App = () => (
                         <Route path="/profile" element={<Profile />} />
                         <Route path="/organization" element={<OrganizationSettings />} />
                         <Route path="/settings" element={<Settings />} />
-                        <Route path="/help" element={<NotFound />} />
+                        <Route path="/help" element={<Help />} />
+                        <Route path="/service-evaluation" element={<ServiceEvaluation />} />
                         <Route path="/social" element={<SocialMedia />} />
                         <Route path="/development" element={<Development />} />
                         <Route path="/crm" element={<CRM />} />

@@ -97,10 +97,10 @@ const Reports = () => {
           <Button 
             className="bg-gradient-primary text-white hover:shadow-glow"
             onClick={() => {
-              notificationService.loading("Gerando relatório personalizado...");
+              notificationService.loading("Gerando relatório de métricas...");
               setTimeout(() => {
                 notificationService.success("Relatório gerado com sucesso!");
-                communicationService.downloadFile("relatorio-personalizado.pdf", "PDF");
+                communicationService.downloadFile("Relatorio Metricas.pdf", "PDF");
               }, 2000);
             }}
           >

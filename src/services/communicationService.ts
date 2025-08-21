@@ -68,13 +68,25 @@ export const communicationService = {
    * Downloads any file with given filename and type
    */
   downloadFile: (filename: string, fileType: string) => {
-    // Simulate file download for any file type
-    const link = document.createElement('a');
-    link.href = '#';
-    link.download = filename;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    console.log(`Downloading ${filename} (${fileType})`);
+    // For PDF files, download from public directory
+    if (fileType === 'PDF' && (filename === 'Relatorio Metricas.pdf' || filename === 'Relatorio Desempenho.pdf')) {
+      const link = document.createElement('a');
+      link.href = `/${filename}`;
+      link.download = filename;
+      link.target = '_blank';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      console.log(`Downloading ${filename} from public directory`);
+    } else {
+      // Simulate file download for other file types
+      const link = document.createElement('a');
+      link.href = '#';
+      link.download = filename;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      console.log(`Downloading ${filename} (${fileType})`);
+    }
   }
 };

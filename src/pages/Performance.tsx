@@ -101,10 +101,10 @@ const Performance = () => {
           <Button
             className="bg-gradient-primary text-white hover:shadow-glow"
             onClick={() => {
-              notificationService.loading("Exportando dados de performance...");
+              notificationService.loading("Exportando relatório de performance...");
               setTimeout(() => {
-                notificationService.success("Dados exportados!", "Relatório de performance salvo em Excel");
-                communicationService.downloadFile("performance-report.xlsx", "XLSX");
+                notificationService.success("Relatório exportado com sucesso!");
+                communicationService.downloadFile("Relatorio Desempenho.pdf", "PDF");
               }, 2000);
             }}
           >

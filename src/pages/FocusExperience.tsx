@@ -63,96 +63,44 @@ const FocusExperience = () => {
     }
   ];
 
-  const focusSchoolCourses = [
+  const aiTools = [
     {
-      title: "Marketing & Branding",
-      description: "Construa marcas que conectam e vendem",
+      title: "CRM",
+      description: "Gestão completa de leads e clientes com IA",
       duration: "12h",
       modules: 24,
       students: 680,
       rating: 4.9,
       level: "Intermediário",
-      icon: Target,
-      category: "Marketing",
+      icon: Users,
+      category: "Gestão",
       price: "R$ 397",
       image: "/lovable-uploads/c20312c1-8c91-4294-929b-ca8e8714c5d0.png"
     },
     {
-      title: "Edição e Videomaker",
-      description: "Domine a arte da criação audiovisual",
+      title: "Funil de Vendas Automático",
+      description: "Automatize seu processo de vendas",
       duration: "16h",
       modules: 32,
       students: 420,
       rating: 4.8,
       level: "Iniciante",
-      icon: Video,
-      category: "Audiovisual",
+      icon: TrendingUp,
+      category: "Automação",
       price: "R$ 497",
       image: "/lovable-uploads/c20312c1-8c91-4294-929b-ca8e8714c5d0.png"
     },
     {
-      title: "Growth Marketing",
-      description: "Estratégias para crescimento exponencial",
+      title: "Gere sua Logo",
+      description: "Criação de logotipos com IA",
       duration: "10h",
       modules: 20,
       students: 350,
       rating: 4.9,
       level: "Avançado",
-      icon: TrendingUp,
-      category: "Growth",
+      icon: Target,
+      category: "Design",
       price: "R$ 597",
-      image: "/lovable-uploads/c20312c1-8c91-4294-929b-ca8e8714c5d0.png"
-    },
-    {
-      title: "Skills do Século 21",
-      description: "Competências essenciais para o futuro",
-      duration: "8h",
-      modules: 16,
-      students: 520,
-      rating: 4.7,
-      level: "Iniciante",
-      icon: Lightbulb,
-      category: "Soft Skills",
-      price: "R$ 297",
-      image: "/lovable-uploads/c20312c1-8c91-4294-929b-ca8e8714c5d0.png"
-    },
-    {
-      title: "Empreendedorismo",
-      description: "Do sonho ao negócio de sucesso",
-      duration: "14h",
-      modules: 28,
-      students: 380,
-      rating: 4.8,
-      level: "Intermediário",
-      icon: Rocket,
-      category: "Negócios",
-      price: "R$ 497",
-      image: "/lovable-uploads/c20312c1-8c91-4294-929b-ca8e8714c5d0.png"
-    },
-    {
-      title: "Neuromarketing e Comunicação Persuasiva",
-      description: "A ciência por trás das decisões de compra",
-      duration: "9h",
-      modules: 18,
-      students: 290,
-      rating: 4.9,
-      level: "Avançado",
-      icon: Brain,
-      category: "Psicologia",
-      price: "R$ 697",
-      image: "/lovable-uploads/c20312c1-8c91-4294-929b-ca8e8714c5d0.png"
-    },
-    {
-      title: "Funil de Vendas e Social Media",
-      description: "Conversão através das redes sociais",
-      duration: "11h",
-      modules: 22,
-      students: 450,
-      rating: 4.8,
-      level: "Intermediário",
-      icon: Users,
-      category: "Social Media",
-      price: "R$ 397",
       image: "/lovable-uploads/c20312c1-8c91-4294-929b-ca8e8714c5d0.png"
     }
   ];
@@ -317,42 +265,42 @@ const FocusExperience = () => {
             <Card className="bg-gradient-card border-border shadow-card">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
-                  <GraduationCap className="h-5 w-5 text-primary" />
-                  Cursos Focus School
+                  <Brain className="h-5 w-5 text-primary" />
+                  Ferramentas IA
                 </CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
-                  {focusSchoolCourses.slice(0, 3).map((curso, index) => (
+                  {aiTools.map((tool, index) => (
                     <div key={index} className="flex gap-4 p-4 border border-border rounded-lg bg-card hover:bg-accent transition-colors">
                       <div className="p-3 bg-primary/10 rounded-lg">
-                        <curso.icon className="h-6 w-6 text-primary" />
+                        <tool.icon className="h-6 w-6 text-primary" />
                       </div>
                       <div className="flex-1">
-                        <h4 className="font-medium text-foreground mb-1">{curso.title}</h4>
-                        <p className="text-sm text-muted-foreground mb-2">{curso.description}</p>
+                        <h4 className="font-medium text-foreground mb-1">{tool.title}</h4>
+                        <p className="text-sm text-muted-foreground mb-2">{tool.description}</p>
                         <div className="flex items-center gap-4 text-xs text-muted-foreground mb-2">
                           <span className="flex items-center gap-1">
-                            <Clock className="h-3 w-3" />
-                            {curso.duration}
+                            <Target className="h-3 w-3" />
+                            {tool.category}
                           </span>
-                          <span>{curso.modules} módulos</span>
-                          <span>{curso.students} alunos</span>
+                          <span>Disponível</span>
                         </div>
                         <div className="flex items-center justify-between">
                           <div className="flex items-center gap-2">
-                            <Badge variant="outline">{curso.level}</Badge>
+                            <Badge variant="outline">IA</Badge>
                             <div className="flex items-center gap-1">
-                              {renderStars(curso.rating)}
-                              <span className="text-xs">{curso.rating}</span>
+                              {renderStars(tool.rating)}
+                              <span className="text-xs">{tool.rating}</span>
                             </div>
                           </div>
                           <Button 
                             size="sm"
-                            onClick={() => notificationService.info(`Ver curso: ${curso.title} na Focus School`)}
+                            className="bg-primary hover:bg-primary/90"
+                            onClick={() => notificationService.info(`Acessando ferramenta: ${tool.title}`)}
                           >
-                            <GraduationCap className="h-4 w-4 mr-1" />
-                            Ver Curso
+                            <Brain className="h-4 w-4 mr-1" />
+                            Ver Ferramenta
                           </Button>
                         </div>
                       </div>
@@ -360,8 +308,8 @@ const FocusExperience = () => {
                   ))}
                   <div className="text-center pt-4">
                     <Button variant="outline" className="w-full">
-                      <GraduationCap className="h-4 w-4 mr-2" />
-                      Ver Todos os Cursos na Focus School
+                      <Brain className="h-4 w-4 mr-2" />
+                      Ver Todas as Ferramentas IA
                     </Button>
                   </div>
                 </div>
@@ -406,7 +354,7 @@ const FocusExperience = () => {
 
           {/* Courses Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {focusSchoolCourses.map((course, index) => {
+            {aiTools.map((course, index) => {
               const IconComponent = course.icon;
               return (
                 <Card key={index} className="bg-gradient-card border-border shadow-card hover:shadow-lg transition-all duration-300 hover:scale-105">

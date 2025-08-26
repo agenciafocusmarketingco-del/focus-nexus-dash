@@ -106,6 +106,11 @@ export function AppSidebar() {
                   Focus
                 </h1>
               </div>
+              {profile?.client && <div className="bg-white/10 p-2 rounded-lg">
+                  <p className="text-xs text-muted-foreground">Empresa
+            </p>
+                  <p className="text-sm font-medium text-white truncate">{profile.client.name}</p>
+                </div>}
             </div> : <div className="flex justify-center">
               <img src={focusLogo} alt="Focus Logo" className="w-8 h-8 rounded-lg" />
             </div>}

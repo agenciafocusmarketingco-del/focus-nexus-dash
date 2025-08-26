@@ -53,7 +53,7 @@ const HeaderWithUserContext = () => {
         
         {profile && (
           <UserContextHeader
-            organizationName="Focus Marketing"
+            organizationName={profile.client?.name || 'Focus Marketing'}
             userName={`${profile.first_name || ''} ${profile.last_name || ''}`.trim() || 'Usuário'}
             onLogoutClick={handleLogout}
           />

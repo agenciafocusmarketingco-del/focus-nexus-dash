@@ -31,12 +31,6 @@ export function UserContextHeader({
     <Popover>
       <PopoverTrigger asChild>
         <button className="flex items-center gap-3 px-3 py-2 rounded-lg bg-card hover:bg-accent transition-colors">
-          <Building className="h-4 w-4 text-muted-foreground" />
-          
-          <span className="font-medium text-foreground">{organizationName}</span>
-          
-          <div className="h-4 border-l border-border" />
-          
           <div className="w-8 h-8 rounded-full overflow-hidden flex items-center justify-center ring-2 ring-primary/20">
             {avatarUrl ? (
               <img 

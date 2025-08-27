@@ -8,75 +8,63 @@ import { usePerformanceMetrics } from "@/hooks/usePerformanceMetrics";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import { notificationService } from "@/services/notificationService";
 import { communicationService } from "@/services/communicationService";
-import { 
-  TrendingUp, 
-  Download, 
-  Calendar,
-  Filter,
-  BarChart3,
-  PieChart,
-  Target,
-  Users
-} from "lucide-react";
-
-const reports = [
-  {
-    id: 1,
-    name: "Relatório Mensal - Performance",
-    type: "Performance",
-    period: "Novembro 2024",
-    status: "Pronto",
-    size: "2.4 MB"
-  },
-  {
-    id: 2,
-    name: "Análise de Tráfego Pago",
-    type: "Tráfego",
-    period: "Último Trimestre", 
-    status: "Pronto",
-    size: "1.8 MB"
-  },
-  {
-    id: 3,
-    name: "Social Media Analytics",
-    type: "Social",
-    period: "Novembro 2024",
-    status: "Processando",
-    size: "3.1 MB"
-  },
-  {
-    id: 4,
-    name: "Relatório de Conversões",
-    type: "CRM",
-    period: "Últimas 4 semanas",
-    status: "Pronto",
-    size: "1.2 MB"
-  }
-];
-
+import { TrendingUp, Download, Calendar, Filter, BarChart3, PieChart, Target, Users } from "lucide-react";
+const reports = [{
+  id: 1,
+  name: "Relatório Mensal - Performance",
+  type: "Performance",
+  period: "Novembro 2024",
+  status: "Pronto",
+  size: "2.4 MB"
+}, {
+  id: 2,
+  name: "Análise de Tráfego Pago",
+  type: "Tráfego",
+  period: "Último Trimestre",
+  status: "Pronto",
+  size: "1.8 MB"
+}, {
+  id: 3,
+  name: "Social Media Analytics",
+  type: "Social",
+  period: "Novembro 2024",
+  status: "Processando",
+  size: "3.1 MB"
+}, {
+  id: 4,
+  name: "Relatório de Conversões",
+  type: "CRM",
+  period: "Últimas 4 semanas",
+  status: "Pronto",
+  size: "1.2 MB"
+}];
 const getStatusColor = (status: string) => {
   switch (status) {
-    case "Pronto": return "bg-success/20 text-success border-success/30";
-    case "Processando": return "bg-warning/20 text-warning border-warning/30";
-    case "Agendado": return "bg-info/20 text-info border-info/30";
-    default: return "bg-secondary/20 text-white border-secondary/30";
+    case "Pronto":
+      return "bg-success/20 text-success border-success/30";
+    case "Processando":
+      return "bg-warning/20 text-warning border-warning/30";
+    case "Agendado":
+      return "bg-info/20 text-info border-info/30";
+    default:
+      return "bg-secondary/20 text-white border-secondary/30";
   }
 };
-
 const Reports = () => {
-  const { reports: dbReports, loading: reportsLoading } = useReports();
-  const { metrics, loading: metricsLoading } = usePerformanceMetrics();
-
+  const {
+    reports: dbReports,
+    loading: reportsLoading
+  } = useReports();
+  const {
+    metrics,
+    loading: metricsLoading
+  } = usePerformanceMetrics();
   if (reportsLoading || metricsLoading) {
-    return (
-      <div className="flex items-center justify-center h-64">
+    return <div className="flex items-center justify-center h-64">
         <LoadingSpinner />
-      </div>
-    );
+      </div>;
   }
-
-  return (
-    <div className="space-y-6 animate-fade-in">
+  return <div className="space-y-6 animate-fade-in">
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
@@ -84,26 +72,14 @@ const Reports = () => {
           <p className="text-muted-foreground">Análises detalhadas e insights dos seus projetos</p>
         </div>
         <div className="flex gap-2">
-          <Button 
-            variant="outline" 
-            className="text-white border-border"
-            onClick={() => {
-              notificationService.info("Filtros aplicados", "Relatórios filtrados por período, categoria e status");
-            }}
-          >
-            <Filter className="h-4 w-4 mr-2" />
-            Filtros
-          </Button>
-          <Button 
-            className="bg-gradient-primary text-white hover:shadow-glow"
-            onClick={() => {
-              notificationService.loading("Gerando relatório de métricas...");
-              setTimeout(() => {
-                notificationService.success("Relatório gerado com sucesso!");
-                communicationService.downloadFile("Relatorio Metricas.pdf", "PDF");
-              }, 2000);
-            }}
-          >
+          
+          <Button className="bg-gradient-primary text-white hover:shadow-glow" onClick={() => {
+          notificationService.loading("Gerando relatório de métricas...");
+          setTimeout(() => {
+            notificationService.success("Relatório gerado com sucesso!");
+            communicationService.downloadFile("Relatorio Metricas.pdf", "PDF");
+          }, 2000);
+        }}>
             <Calendar className="h-4 w-4 mr-2" />
             Gerar Relatório
           </Button>
@@ -202,8 +178,7 @@ const Reports = () => {
       <div>
         <h2 className="text-xl font-semibold text-white mb-4">Relatórios Disponíveis</h2>
         <div className="space-y-4">
-          {dbReports.length > 0 ? dbReports.map((report) => (
-            <Card key={report.id} className="bg-gradient-card border-border shadow-card hover:shadow-glow transition-all duration-300">
+          {dbReports.length > 0 ? dbReports.map(report => <Card key={report.id} className="bg-gradient-card border-border shadow-card hover:shadow-glow transition-all duration-300">
               <CardContent className="p-6">
                 <div className="flex items-center justify-between">
                   <div className="flex-1">
@@ -219,47 +194,31 @@ const Reports = () => {
                     </div>
                   </div>
                   <div className="flex gap-2">
-                    {report.status === "Pronto" && (
-                      <Button 
-                        size="sm" 
-                        className="bg-gradient-primary text-white hover:shadow-glow"
-                        onClick={() => {
-                          notificationService.loading(`Baixando ${report.title}...`);
-                          setTimeout(() => {
-                            notificationService.success("Download iniciado!");
-                            communicationService.downloadFile(`${report.title}.pdf`, "PDF");
-                          }, 1000);
-                        }}
-                      >
+                    {report.status === "Pronto" && <Button size="sm" className="bg-gradient-primary text-white hover:shadow-glow" onClick={() => {
+                  notificationService.loading(`Baixando ${report.title}...`);
+                  setTimeout(() => {
+                    notificationService.success("Download iniciado!");
+                    communicationService.downloadFile(`${report.title}.pdf`, "PDF");
+                  }, 1000);
+                }}>
                         <Download className="h-3 w-3 mr-1" />
                         Download
-                      </Button>
-                    )}
-                    <Button 
-                      size="sm" 
-                      variant="outline" 
-                      className="text-white border-border hover:bg-secondary/20"
-                      onClick={() => {
-                        notificationService.info("Visualizando relatório", `Abrindo análise detalhada de ${report.title}`);
-                      }}
-                    >
+                      </Button>}
+                    <Button size="sm" variant="outline" className="text-white border-border hover:bg-secondary/20" onClick={() => {
+                  notificationService.info("Visualizando relatório", `Abrindo análise detalhada de ${report.title}`);
+                }}>
                       Visualizar
                     </Button>
                   </div>
                 </div>
               </CardContent>
-            </Card>
-          )) : (
-            <Card className="bg-gradient-card border-border shadow-card">
+            </Card>) : <Card className="bg-gradient-card border-border shadow-card">
               <CardContent className="p-6 text-center">
                 <p className="text-muted-foreground">Nenhum relatório encontrado. Faça login para ver seus relatórios.</p>
               </CardContent>
-            </Card>
-          )}
+            </Card>}
         </div>
       </div>
-    </div>
-  );
+    </div>;
 };
-
 export default Reports;

@@ -270,7 +270,7 @@ const FocusExperience = () => {
                 Matrícula Online
               </Button>
               <Button variant="outline" size="lg" onClick={() => {
-              window.open("https://preview--focus-spark-portal.lovable.app/", "_blank");
+              window.open("https://preview--ignite-learner-portal.lovable.app/cursos", "_blank");
               notificationService.success("Redirecionando para o Portal do Aluno...");
             }}>
                 <PlayCircle className="h-5 w-5 mr-2" />

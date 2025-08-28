@@ -263,7 +263,7 @@ const FocusExperience = () => {
             </p>
             <div className="flex flex-wrap justify-center gap-4">
               <Button size="lg" className="bg-primary hover:bg-primary/90" onClick={() => {
-              window.open("https://lovable.dev/projects/bc1282ff-cc85-4a53-a2bc-541d3d9eb346", "_blank");
+              window.open("https://preview--ignite-learner-portal.lovable.app/", "_blank");
               notificationService.success("Redirecionando para matrícula online...");
             }}>
                 <BookMarked className="h-5 w-5 mr-2" />

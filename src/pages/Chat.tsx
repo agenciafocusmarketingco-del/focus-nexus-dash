@@ -4,7 +4,16 @@ import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Input } from "@/components/ui/input";
 import { notificationService } from "@/services/notificationService";
+import { communicationService } from "@/services/communicationService";
 import { MessageCircle, Newspaper, TrendingUp, Building, Lightbulb, Rocket, Clock, Bookmark, Share2, Search, Filter, Star, ExternalLink, Eye, Heart, ChevronRight, Send, Paperclip, Phone, Video, Users, Settings, Headphones, Target, Zap, Code, Plus, FileText, AlertCircle, CheckCircle, Timer } from "lucide-react";
+
+// WhatsApp numbers mapping for each sector
+const sectorWhatsAppNumbers: Record<string, string> = {
+  "Comercial": "5585998248000",
+  "Tráfego Pago": "5585965988009", 
+  "Tech & Desenvolvimento": "5585924161184",
+  "Focus Estúdios": "5585917922844"
+};
 const teamSectors = [{
   id: 1,
   name: "Comercial",
@@ -185,9 +194,14 @@ const handleStartChat = (sectorName: string) => {
 const handleCreateTicket = () => {
   notificationService.success("Novo chamado criado com sucesso!");
 };
-const handleWhatsAppContact = () => {
-  window.open("https://wa.me/5511999999999?text=Olá! Gostaria de falar com a equipe Focus.", "_blank");
-  notificationService.success("Redirecionando para WhatsApp...");
+const handleSectorWhatsApp = (sectorName: string) => {
+  const phoneNumber = sectorWhatsAppNumbers[sectorName];
+  if (phoneNumber) {
+    communicationService.openWhatsApp(phoneNumber, `Olá! Gostaria de falar com a equipe de ${sectorName}.`);
+    notificationService.success(`Conectando com ${sectorName} via WhatsApp...`);
+  } else {
+    notificationService.error("Número do WhatsApp não encontrado para este setor.");
+  }
 };
 const Chat = () => {
   return <div className="space-y-6 animate-fade-in">
@@ -228,7 +242,7 @@ const Chat = () => {
         <TabsContent value="team" className="space-y-6">
           {/* Quick Contact Button */}
           <div className="mb-6">
-            <Button size="lg" className="w-full bg-primary hover:bg-primary/90 text-white font-semibold py-4" onClick={handleWhatsAppContact}>
+            <Button size="lg" className="w-full bg-primary hover:bg-primary/90 text-white font-semibold py-4" onClick={() => handleSectorWhatsApp("Comercial")}>
               <MessageCircle className="h-5 w-5 mr-2" />
               Falar com a Equipe Agora
             </Button>
@@ -276,6 +290,14 @@ const Chat = () => {
                       notificationService.info(`Agendando call com ${sector.name}...`);
                     }}>
                           <Phone className="h-4 w-4" />
+                        </Button>
+                        <Button 
+                          size="sm" 
+                          variant="secondary" 
+                          className="bg-green-600 hover:bg-green-700 text-white border-green-600"
+                          onClick={() => handleSectorWhatsApp(sector.name)}
+                        >
+                          <MessageCircle className="h-4 w-4 fill-current" />
                         </Button>
                       </div>
                     </div>;
